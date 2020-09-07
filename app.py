@@ -20,6 +20,7 @@ from tkinter import ttk # Refined GUI elements
 # (Modules I have made)
 import items # Items/Inventories
 import map # Maps/Rooms
+import characters # Player/Enemies
 
 # - Classes
 
