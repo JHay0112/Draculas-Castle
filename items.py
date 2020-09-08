@@ -11,6 +11,8 @@
 
 # - Imports
 
+import random # Produce pseudo-random results
+
 # - Classes
 
 # The base Item class
@@ -43,6 +45,21 @@ class Weapon(Item):
         # Set attributes associated with parent item
         super().__init__(name)
 
+    # - attack()
+    # Returns attack damage
+    #
+    # self
+    def attack_damage(self):
+
+        # Get max and min damage values
+        min_damage = self._damage[0]
+        max_damage = self._damage[1]
+
+        # Get random value between max and min damage
+        damage = random.randint(min_damage, max_damage)
+
+        return(damage)
+
 # Armour class, child of item
 class Armour(Item):
 
@@ -60,6 +77,17 @@ class Armour(Item):
         # Set attributes associated with parent item
         super().__init__(name)
 
+    # - defend()
+    # Returns amount of damage to be protected, random between no protection and all set protection
+    #
+    # self
+    def defend(self):
+
+        # Get random value between zero and protection
+        protection = random.randint(0, self._protection)
+
+        return(protection)
+
 # Potion class, child of Item
 class Potion(Item):
 
@@ -71,7 +99,7 @@ class Potion(Item):
     # health_effect (init) - Amount of health the item will give the user
     def __init__(self, name, health_effect):
 
-        # Set armour attributes
+        # Set potion attributes
         self._health_effect = health_effect
 
         # Set attributes associated with parent item
