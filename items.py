@@ -77,6 +77,19 @@ class Potion(Item):
         # Set attributes associated with parent item
         super().__init__(name)
 
+# Key class, child of Item
+class Key(item):
+
+    # - __init__()
+    # Initialise Key Object
+    #
+    # self
+    # name (str) - The name of the key
+    def __init__(self, name):
+
+        # Set attributes associated with parent item
+        super().__init__(name)
+
 # Inventory class, used for item management
 class Inventory:
 
