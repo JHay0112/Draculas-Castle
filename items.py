@@ -129,4 +129,59 @@ class Key(Item):
 # Inventory class, used for item management
 class Inventory:
 
-    pass
+    # - __init__()
+    #  Initialise Inventory Object
+    #
+    # self
+    def __init__(self):
+
+        # Set inventory attributes
+        self._items = [] # List of item objects stored by inventory 
+        self._gui = None # Store GUI object (Frame)
+
+    # - gui()
+    # Initialise a GUI object in the inventory
+    #
+    # self
+    # parent (Tkinter) - The parent frame/root object the gui is displayed in
+    def gui(self, parent):
+
+        pass
+
+    # - items()
+    # Return a list of the items in the inventory
+    #
+    # self
+    def items(self):
+
+        return(self._items)
+
+    # - add_item()
+    # Add item to the inventory
+    #
+    # self
+    # new_item (Item) - A new item object to store in the inventory
+    def add_item(self, new_item):
+
+        self._items.append(new_item)
+
+    # - add_items()
+    # Add multiple items to the inventory
+    # 
+    # self
+    # new_items (list of Items) - List of items to add to the inventory
+    def add_items(self, new_items):
+
+        # For every item in the list
+        for item in new_items:
+            # Add the item to the inventory
+            self.add_item(item)
+
+    # - drop_item()
+    # Remove the item from the inventory
+    # 
+    # self
+    # item (Item) - The item to be removed from the inventory
+    def drop_item(self, item):
+
+        self._items.remove(item)
