@@ -81,7 +81,7 @@ class Armour(Item):
     # Returns amount of damage to be protected, random between no protection and all set protection
     #
     # self
-    def defend(self):
+    def protection(self):
 
         # Get random value between zero and protection
         protection = random.randint(0, self._protection)
@@ -105,8 +105,16 @@ class Potion(Item):
         # Set attributes associated with parent item
         super().__init__(name)
 
+    # - health_effect()
+    # Get the amount of health this potion will effect
+    #
+    # self
+    def health_effect(self):
+
+        return(self._health_effect)
+
 # Key class, child of Item
-class Key(item):
+class Key(Item):
 
     # - __init__()
     # Initialise Key Object
