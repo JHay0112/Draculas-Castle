@@ -12,6 +12,8 @@
 # - Imports
 
 import random # Produce pseudo-random results
+import tkinter as tk # GUI
+from tkinter import ttk # Refined GUI elements
 
 # - Classes
 
