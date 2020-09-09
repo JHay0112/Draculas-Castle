@@ -18,7 +18,14 @@ import items # Item management
 # Map for organising rooms
 class Map:
 
-    pass
+    # - __init__()
+    # Initialise a map object
+    #
+    # self
+    # map (2D list) - 2d list of room locations in map
+    def __init__(self, map):
+
+        self._map = map
 
 # Rooms in a map
 class Room:
@@ -28,10 +35,7 @@ class Room:
     # 
     # self
     # name (str) - Name of the room
-    # n (Room) - Which room the North entrance goes to, default None
-    # s (Room) - Which room the South entrance goes to, default None
-    # e (Room) - Which room the East entrance goes to, default None
-    # w (Room) - Which room the West entrance goes to, default None
+    # n (bool/Room) -  
     # key (str) - The name of the key the room requires to unlock, default None
     def __init__(self, name, n = None, s = None, e = None, w = None, key = None):
 
