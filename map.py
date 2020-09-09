@@ -11,6 +11,8 @@
 
 # - Imports
 
+import items # Item management
+
 # - Classes
 
 # Map for organising rooms
@@ -41,6 +43,8 @@ class Room:
         self._w = w 
         self._key = key
         self._gui = None
+        self._inventory = items.Inventory()
+        self._enemies = []
 
     # - key()
     # Returns the key value
