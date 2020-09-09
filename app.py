@@ -24,7 +24,24 @@ import characters # Player/Enemies
 
 # - Classes
 
-# - Functions
+# - Game
+# The game object, controls all aspects of a game
+class Game:
+
+    # Game Constants
+    EASY = 0.5
+    NORMAL = 1
+    HARD = 1.5
+
+    # - __init__()
+    # Initialise the game object
+    #
+    # self
+    # parent (tkinter) - Parent GUI Object
+    # game_map (rooms.Map) - The map the game is played in
+    def __init__(self, parent, game_map):
+
+        pass
 
 # - Main
 
@@ -38,7 +55,8 @@ cellar = rooms.Room("Cellar", n = True, w = toilet)
 entrance_hall = rooms.Room("Entrance Hall", n = True)
 crypt = rooms.Room("THE CRYPT")
 
-rooms.Map([
+# Create Map of rooms
+castle_map = rooms.Map([
     [
         rooms.Room("Dressing Room", e = True, s = True), 
         rooms.Room("Bathroom", w = True), 
@@ -51,7 +69,7 @@ rooms.Map([
         toilet, 
         rooms.Room("Back Hall", n = True, s = True, e = True), 
         rooms.Room("Passage", n = True, w = True, e = True),
-        rooms.Room("Scullery", s = True, w = True)    
+        rooms.Room("Scullery", s = True, w = True)
     ],
     [
         rooms.Room("West Tower", n = True, s = True, e = True),
@@ -75,6 +93,9 @@ if __name__ == "__main__":
     # Tkinter setup
     root.geometry("1000x700+100+100")
     root.title("Dracula's Castle")
+
+    # Game setup
+    game = Game(root, castle_map) # Create game object
 
     # Tkinter mainloop
     root.mainloop()
