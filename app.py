@@ -38,7 +38,7 @@ cellar = rooms.Room("Cellar", n = True, w = toilet)
 entrance_hall = rooms.Room("Entrance Hall", n = True)
 crypt = rooms.Room("THE CRYPT")
 
-castle_map = rooms.Map([
+rooms.Map([
     [
         rooms.Room("Dressing Room", e = True, s = True), 
         rooms.Room("Bathroom", w = True), 
