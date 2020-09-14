@@ -4,6 +4,7 @@
 
     Author: Jordan Hay
     Date: 2020-09-06
+    Version: 1.1
 
     Map and rooms for Dracula's Castle.
 
@@ -23,9 +24,29 @@ class Map:
     #
     # self
     # map (2D list) - 2d list of room locations in map
-    def __init__(self, map):
+    # start_room (Room) - The room in which the player starts in the map
+    # boss_room (Room) - The final room in which the player does battle with the final boss
+    def __init__(self, map, start_room, boss_room):
 
         self._map = map
+        self._start_room = start_room
+        self._boss_room = boss_room
+
+    # - start_room()
+    # Returns the room object that the player starts in
+    #
+    # self
+    def start_room(self):
+
+        return(self._start_room)
+
+    # - boss_room()
+    # Returns the room object the player ends in
+    #
+    # self
+    def boss_room(self):
+
+        return(self._start_room)
 
 # Rooms in a map
 class Room:
