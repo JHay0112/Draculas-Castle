@@ -17,7 +17,9 @@ from tkinter import ttk # Refined GUI elements
 
 # - Classes
 
-# The base Item class
+# - Item
+# An Item with attributes, largely used as a parent to other more specific item types
+# Version: 1.0
 class Item:
 
     # - __init__()
@@ -30,7 +32,8 @@ class Item:
         # Set item attributes
         self._name = name
 
-# Weapon class, child of Item
+# -- Weapon
+# Item child, creates weapon items with associated damage values
 class Weapon(Item):
 
     # - __init__()
@@ -62,7 +65,8 @@ class Weapon(Item):
 
         return(damage)
 
-# Armour class, child of item
+# -- Armour
+# Item child, creates armour items with associated protection values
 class Armour(Item):
 
     # - __init__()
@@ -90,7 +94,8 @@ class Armour(Item):
 
         return(protection)
 
-# Potion class, child of Item
+# -- Potion
+# Item child, creates potion items with associated health effects
 class Potion(Item):
 
     # - __init__()
@@ -115,7 +120,8 @@ class Potion(Item):
 
         return(self._health_effect)
 
-# Key class, child of Item
+# -- Key
+# Item child, createds keys that can unlock special rooms
 class Key(Item):
 
     # - __init__()
@@ -128,7 +134,9 @@ class Key(Item):
         # Set attributes associated with parent item
         super().__init__(name)
 
-# Inventory class, used for item management
+# - Inventory
+# Arranges and controls a set of items
+# Version: 1.0
 class Inventory:
 
     # - __init__()
