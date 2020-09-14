@@ -38,7 +38,7 @@ cellar = rooms.Room("Cellar", n = True, w = toilet)
 entrance_hall = rooms.Room("Entrance Hall", n = True)
 crypt = rooms.Room("THE CRYPT")
 
-rooms.Map([
+castle_map = rooms.Map([
     [
         rooms.Room("Dressing Room", e = True, s = True), 
         rooms.Room("Bathroom", w = True), 
@@ -67,7 +67,7 @@ rooms.Map([
         rooms.Room("Lounge", n = True, e = True),
         rooms.Room("East Tower", w = True)
     ]
-])
+], entrance_hall, crypt)
 
 # Main check
 if __name__ == "__main__":
