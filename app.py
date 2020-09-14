@@ -85,7 +85,7 @@ castle_map = rooms.Map([
         rooms.Room("Lounge", n = True, e = True),
         rooms.Room("East Tower", w = True)
     ]
-])
+], entrance_hall, crypt)
 
 # Main check
 if __name__ == "__main__":
