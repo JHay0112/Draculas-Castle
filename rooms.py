@@ -4,7 +4,6 @@
 
     Author: Jordan Hay
     Date: 2020-09-06
-    Version: 1.1
 
     Map and rooms for Dracula's Castle.
 
@@ -16,7 +15,9 @@ import items # Item management
 
 # - Classes
 
-# Map for organising rooms
+# - Map
+# Arranges and controls a set of room objects
+# Version: 1.1
 class Map:
 
     # - __init__()
@@ -48,7 +49,9 @@ class Map:
 
         return(self._start_room)
 
-# Rooms in a map
+# - Room
+# Holds attributes of a room, e.g. entrances, inventory
+# Version: 0.1
 class Room:
 
     # - __init__()
