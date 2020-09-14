@@ -41,6 +41,17 @@ class Game:
     # game_map (rooms.Map) - The map the game is played in
     def __init__(self, parent, game_map):
 
+        # Setup GUI
+
+        pass
+
+    # - battle()
+    # Battle the player and an enemy
+    #
+    # self
+    # enemy (character.Enemy) - The enemy the player will do battle with
+    def battle(enemy):
+
         pass
 
 # - Main
