@@ -50,7 +50,7 @@ class Game:
     #
     # self
     # enemy (character.Enemy) - The enemy the player will do battle with
-    def battle(enemy):
+    def battle(self, enemy):
 
         pass
 
