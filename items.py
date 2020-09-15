@@ -243,7 +243,7 @@ class Inventory:
                     # If we can't get the specified position we will get the item at position zero
                     # Since the list isn't empty, we've already checked that, we know there will be an item at zero
                     # An alternative would to be move up one position and recurse, this could cause lag if the position is way off though
-                    curent_item = self._items[0]
+                    current_item = self._items[0]
 
                 # Check and set the button states
                 self.check_buttons(current_item)
