@@ -56,15 +56,6 @@ class Map:
 # Version: 0.1
 class Room:
 
-    # Standard grid representation of any room
-    GRID = [
-        [1, 1, "n", 1, 1],
-        [1, 0, 0, 0, 1],
-        ["w", 0, 0, 0, "e"],
-        [1, 0, 0, 0, 1],
-        [1, 1, "s", 1, 1]
-    ]
-
     # - __init__()
     # Initialise a room object
     # 
@@ -85,11 +76,13 @@ class Room:
         self._inventory = items.Inventory()
         self._enemies = []
         self._grid = [
-            [1, 1, not self._n, 1, 1],
-            [1, 0, 0, 0, 1],
-            [not self._w, 0, 0, 0, not self._e],
-            [1, 0, 0, 0, 1],
-            [1, 1, not self._s, 1, 1]
+            [0, 0, self._n, "n", self._n, 0, 0],
+            [0, 1, 1, not self._n, 1, 1, 0],
+            [self._w, 1, 0, 0, 0, 1, self._e],
+            ["w", not self._w, 0, 0, 0, not self._e, "e"],
+            [self._w, 1, 0, 0, 0, 1, self._e],
+            [0, 1, 1, not self._s, 1, 1, 0,],
+            [0, 0, self._s, "s", self._s, 0, 0]
         ] # Grid represenation of this specific room with entrances added
 
     # - key()
@@ -129,8 +122,8 @@ class Room:
             # For every column in this row
             for column in row:
 
-                # If the column is non-zero
-                if(column != 0):
+                # If the column is non-zero and non-string
+                if((column != 0) and (type(column) != str)):
 
                     fill = "black"
 
