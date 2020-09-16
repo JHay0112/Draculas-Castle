@@ -15,8 +15,36 @@ import items # Create items
 
 # - Classes
 
-# The player object
-class Player:
+# - Character
+# The base for both players and enemies
+class Character:
+
+    # - __init__()
+    #
+    # self
+    # name (str) - The name of the character
+    # health (int) - The health of the character
+    # weapon (items.Weapon) - The weapon the character uses
+    # armour (items.Armour) - The armour the character uses
+    def __init__(self, name, health = 100, weapon = None, armour = None):
+
+        self._name = name
+        self._inventory = items.Inventory() 
+        self._weapon = weapon
+        self._armour = armour
+        self._health = health
+
+    # - weapon()
+    # Returns the weapon object the enemy uses
+    #
+    # self
+    def weapon(self):
+
+        return(self._weapon)
+
+# - Player
+# Child of Character
+class Player(Character):
 
     # - __init__()
     #
@@ -27,21 +55,11 @@ class Player:
     def __init__(self, name, weapon = items.Weapon("Stick", [10, 20]), armour = None):
 
         # Set attributes
-        self._name = name
-        self.Inventory(self.use) 
-        self._weapon = weapon
-        self._armour = armour
-        self._health = 100
         self._room = None # Room the player is in
         self._position = [0, 0] # Position of the player in room [x, y]
 
-    # - weapon()
-    # Returns the weapon object the player uses
-    #
-    # self
-    def weapon(self):
-
-        return(self._weapon)
+        # Set attributes associated with Character
+        super().__init__(name, weapon = weapon, armour = armour)
 
     # - use()
     # Defines how to use an item
@@ -58,29 +76,9 @@ class Player:
         
         pass
 
-# The enemy object
-class Enemy:
+# - Enemy
+# Child of Character
+class Enemy(Character):
 
-    # - __init__()
-    #
-    # self
-    # name (str) - The name of the enemy
-    # health (int) - The health of the enemy
-    # weapon (items.Weapon) - The weapon the enemy uses
-    # armour (items.Armour) - The armour the enemy uses
-    def __init__(self, name, health, weapon, armour):
-
-        # Set attributes
-        self._name = name
-        self.Inventory() 
-        self._weapon = weapon
-        self._armour = armour
-        self._health = health
-
-    # - weapon()
-    # Returns the weapon object the enemy uses
-    #
-    # self
-    def weapon(self):
-
-        return(self._weapon)
+    # Currently don't need code in here 
+    pass
