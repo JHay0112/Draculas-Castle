@@ -101,13 +101,13 @@ class Room:
     def gui(self, parent, height, width):
 
         # Initialise the canvas object
-        canvas = tk.Canvas(parent, height = height, width = width)
-        canvas.pack(fill = tk.BOTH)
+        self._gui = tk.Canvas(parent, height = height, width = width)
+        self._gui.pack(fill = tk.BOTH)
 
         rows = len(self._grid) # Rows in grid
         grid_height = height/rows # Calculate the height of each grid piece
 
-         # Iteration counters
+        # Iteration counters
         row_num = 0
         column_num = 0
 
@@ -134,7 +134,7 @@ class Room:
                     y1 = y0 + grid_height
 
                     # Generate rectangle
-                    canvas.create_rectangle(x0, y0, x1, y1, fill = fill, outline = "")
+                    self._gui.create_rectangle(x0, y0, x1, y1, fill = fill, outline = "")
 
                 # Iterate column
                 column_num += 1
@@ -151,7 +151,7 @@ if(__name__ == "__main__"):
     root.geometry("300x300+100+100")
 
     # Create Room object
-    room = Room("Test Chamber #1", n = True, s = True)
+    room = Room("Test Chamber #1", n = True, e = True)
     room.gui(root, 300, 300)
 
     # Root mainloop
