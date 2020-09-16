@@ -29,9 +29,9 @@ class Map:
     # map (2D list) - 2d list of room locations in map
     # start_room (Room) - The room in which the player starts in the map
     # boss_room (Room) - The final room in which the player does battle with the final boss
-    def __init__(self, map, start_room, boss_room):
+    def __init__(self, game_map, start_room, boss_room):
 
-        self._map = map
+        self._map = game_map
         self._start_room = start_room
         self._boss_room = boss_room
 
