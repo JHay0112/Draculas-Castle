@@ -12,6 +12,7 @@
 # - Imports
 
 import items # Create items
+import rooms # Manage rooms
 import tkinter as tk # GUI
 from tkinter import ttk # Refined GUI elements
 
@@ -103,6 +104,59 @@ class Player(Character):
             # If the item is a potion
             # Add the health effect to our health
             self._health += item.health_effect()
+
+    # - move()
+    # Move the player by an amount x/y in the room
+    #
+    # self
+    # x (int): The amount to move the player in x
+    # y (int): The amount to move the player in y
+    def move(self, x, y):
+
+        # Calculate the new x and y
+        new_x = self._position[0] += x
+        new_y = self._position[1] += y
+
+        # Get room grid and feed in new x and y vals
+        grid_value = self._room.grid()[new_x, new_y]
+
+        # If the grid value is a string
+        if(type(grid_value) == str):
+            # TODO: check for which exit and move rooms accordingly
+            pass
+        elif(grid_value == 0):
+            # If grid value is zero, not wall, thus move
+            self._position[0] += x
+            self._position[1] += y
+        # Else it's a wall, do not move
+
+    # - change_room()
+    # Change the room the player is in
+    #
+    # self
+    # room (rooms.Room): The room the player is to move to
+    # entrance (str): The name of the entrance the player will appear in e.g. "n"
+    def change_room(room, entrance):
+
+        # Flag for if room is locked
+        locked = True
+
+        # Check if room is locked
+        if(type(room.key()) == items.Key):
+            # If room is locked check the player inventory for the relevant key
+            if(room.key() in self._inventory.items()):
+                # If the player has the key then unlock the room
+                locked = False
+            # Else rooms stays locked, nothing changes
+        else:
+            # Room is not locked, so set it as not locked
+            locked = False
+
+        if(not locked):
+            # Set current room to new room
+            self._room = room
+            self._position = room.find_entrance(entrance)
+            
         
 # - Enemy
 # Child of Character

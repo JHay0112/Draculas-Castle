@@ -76,14 +76,14 @@ class Room:
         self._inventory = items.Inventory()
         self._enemies = []
         self._grid = [
-            [0, 0, self._n, "n", self._n, 0, 0],
-            [0, 1, 1, not self._n, 1, 1, 0],
-            [self._w, 1, 0, 0, 0, 1, self._e],
-            ["w", not self._w, 0, 0, 0, not self._e, "e"],
-            [self._w, 1, 0, 0, 0, 1, self._e],
-            [0, 1, 1, not self._s, 1, 1, 0,],
-            [0, 0, self._s, "s", self._s, 0, 0]
-        ] # Grid represenation of this specific room with entrances added
+                [0, 0, self._n, "n", self._n, 0, 0],
+                [0, 1, 1, not self._n, 1, 1, 0],
+                [self._w, 1, 0, 0, 0, 1, self._e],
+                ["w", not self._w, 0, 0, 0, not self._e, "e"],
+                [self._w, 1, 0, 0, 0, 1, self._e],
+                [0, 1, 1, not self._s, 1, 1, 0,],
+                [0, 0, self._s, "s", self._s, 0, 0]
+            ] # Grid represenation of this specific room with entrances added
 
     # - key()
     # Returns the key value
@@ -92,6 +92,52 @@ class Room:
     def key(self):
         
         return(self._key)
+
+    # - grid()
+    # Returns the room's grid
+    #
+    # self
+    def grid(self):
+
+        return(self._grid)
+
+    # - find_entrance()
+    # Returns the position of a selected entrance
+    #
+    # self
+    # entrance (str): Name of the entrance to find
+    def find_entrance(self, entrance):
+
+        rows = len(self._grid) # Rows in grid
+
+        # Iteration counters
+        row_num = 0
+        column_num = 0
+
+        # For every row
+        for row in self._grid:
+
+            # Start at column zero
+            column_num = 0
+            columns = len(row) # Get columns in row
+
+            # For every column in row
+            for column in row:
+
+                # if column is the same as the entrance string
+                if(column == entrance):
+                    # Then return the position
+                    return([column_num, row_num])
+
+                # Iterate column num
+                column_num += 1
+
+            # Iterate row num
+            row_num += 1
+
+        # If we get to this point then there is no entrance return false
+        return(False)
+            
 
     # - gui()
     # Returns the gui object
