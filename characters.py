@@ -105,7 +105,7 @@ class Player(Character):
             self._health += item.health_effect()
             
         # Remove the item from the inventory
-        self._inventory.remove_item(item)
+        self._inventory.drop_item(item)
         
 # - Enemy
 # Child of Character
