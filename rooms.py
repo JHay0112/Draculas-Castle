@@ -27,16 +27,25 @@ class Map:
     #
     # self
     # map (2D list) - 2d list of room locations in map
-    # start_room (Room) - The room in which the player starts in the map
-    # boss_room (Room) - The final room in which the player does battle with the final boss
+    # start_room (list) - The position of the room in which the player starts in the map
+    # boss_room (list) - The position of the final room in which the player does battle with the final boss
     def __init__(self, game_map, start_room, boss_room):
 
         self._map = game_map
         self._start_room = start_room
         self._boss_room = boss_room
 
+    # - find_room()
+    # returns a room object using a 2d key
+    #
+    # self
+    # key (list) - 2d key stored as a list that finds a room
+    def find_room(self, key):
+
+        return(self._map[key[0]][key[1]])
+
     # - start_room()
-    # Returns the room object that the player starts in
+    # Returns the room position that the player starts in
     #
     # self
     def start_room(self):
@@ -44,12 +53,12 @@ class Map:
         return(self._start_room)
 
     # - boss_room()
-    # Returns the room object the player ends in
+    # Returns the room position the player ends in
     #
     # self
     def boss_room(self):
 
-        return(self._start_room)
+        return(self._boss_room)
 
 # - Room
 # Holds attributes of a room, e.g. entrances, inventory

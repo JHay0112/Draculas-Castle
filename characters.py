@@ -63,11 +63,13 @@ class Player(Character):
     # name (str) - The name of player
     # weapon (items.Weapon) - The weapon the player starts with
     # armour (items.Armour) - The armour the player starts with
-    def __init__(self, name, weapon = items.Weapon("Stick", [10, 20]), armour = None):
+    # game_map (rooms.Map) - The map of rooms the player can explore
+    def __init__(self, name, weapon = items.Weapon("Stick", [10, 20]), armour = None, game_map = None):
 
         # Set attributes
-        self._room = None # Room the player is in
-        self._position = [0, 0] # Position of the player in room [x, y]
+        self._map = game_map
+        self._room = self._map.start_room() # Room the player is in
+        self._position = [-1, 3] # Position of the player in room [x, y]
 
         # Set attributes associated with Character
         super().__init__(name, weapon = weapon, armour = armour)
@@ -105,6 +107,12 @@ class Player(Character):
             # Add the health effect to our health
             self._health += item.health_effect()
 
+    # - room_obj()
+    # object representation of current room
+    def room_obj(self):
+
+        return(self._map.find_room(self._room))
+
     # - move()
     # Move the player by an amount x/y in the room
     #
@@ -118,12 +126,31 @@ class Player(Character):
         new_y = self._position[1] += y
 
         # Get room grid and feed in new x and y vals
-        grid_value = self._room.grid()[new_x, new_y]
+        grid_value = self.room_obj().grid()[new_x, new_y]
 
         # If the grid value is a string
         if(type(grid_value) == str):
-            # TODO: check for which exit and move rooms accordingly
-            pass
+            # Grid value is string so must be at entrance, we need to move rooms
+            if(grid_value = "n"):
+                # Move room position one north
+                self._room[1] += 1
+                # Update position to be new room southern entrance
+                self._position = self.room_obj().find_entrance("s")
+            elif(grid_value = "e"):
+                # Move room position east
+                self._room[0] += 1
+                # Update position to be new room west entrance
+                self._position = self.room_obj().find_entrance("w")
+            elif(grid_value = "s"):
+                # Move room position south
+                self._room[1] -= 1
+                # Update position to be new room north entrance
+                self._position = self.room_obj().find_entrance("n")
+            elif(grid_value = "w"):
+                # Move room position west
+                self._room[0] -= 1
+                # Update position to be new room east entrance
+                self._position = self.room_obj().find_entrance("e")
         elif(grid_value == 0):
             # If grid value is zero, not wall, thus move
             self._position[0] += x
@@ -134,17 +161,18 @@ class Player(Character):
     # Change the room the player is in
     #
     # self
-    # room (rooms.Room): The room the player is to move to
+    # room (list): The room the player is to move to
     # entrance (str): The name of the entrance the player will appear in e.g. "n"
-    def change_room(room, entrance):
+    def change_room(self, room, entrance):
 
         # Flag for if room is locked
         locked = True
+        room_obj = self._map.find_room(room) # Get object represenation of room
 
         # Check if room is locked
-        if(type(room.key()) == items.Key):
+        if(type(room_obj.key()) == items.Key):
             # If room is locked check the player inventory for the relevant key
-            if(room.key() in self._inventory.items()):
+            if(room_obj.key() in self._inventory.items()):
                 # If the player has the key then unlock the room
                 locked = False
             # Else rooms stays locked, nothing changes
@@ -157,7 +185,7 @@ class Player(Character):
             self._room = room
             self._position = room.find_entrance(entrance)
             
-        
+
 # - Enemy
 # Child of Character
 class Enemy(Character):
