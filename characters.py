@@ -103,9 +103,6 @@ class Player(Character):
             # If the item is a potion
             # Add the health effect to our health
             self._health += item.health_effect()
-            
-        # Remove the item from the inventory
-        self._inventory.drop_item(item)
         
 # - Enemy
 # Child of Character
