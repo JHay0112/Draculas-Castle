@@ -35,14 +35,34 @@ class Map:
         self._start_room = start_room
         self._boss_room = boss_room
 
-    # - find_room()
-    # returns a room object using a 2d key
+        # Row iteration counter
+        row_num = 0
+
+        # Set map values in room objects
+        # For each row
+        for row in self._map:
+
+            # Column iteration counter
+            column_num = 0
+
+            # For each room/column in the row
+            for column in row:
+                # Set the map, passing self and row/column coords
+                column.set_map(self, [row_num, column_num])
+
+                # Iterate column num
+                column_num += 1
+
+            # Iterate row num
+            row_num += 1
+
+    # - grid()
+    # Returns the map grid representation
     #
     # self
-    # key (list) - 2d key stored as a list that finds a room
-    def find_room(self, key):
+    def grid(self):
 
-        return(self._map[key[0]][key[1]])
+        return(self._map)
 
     # - start_room()
     # Returns the room position that the player starts in
@@ -50,7 +70,7 @@ class Map:
     # self
     def start_room(self):
 
-        return(self.find_room(self._start_room))
+        return(self._start_room)
 
     # - boss_room()
     # Returns the room position the player ends in
@@ -58,7 +78,7 @@ class Map:
     # self
     def boss_room(self):
 
-        return(self.find_room(self._boss_room))
+        return(self._boss_room)
 
 # - Room
 # Holds attributes of a room, e.g. entrances, inventory
@@ -70,20 +90,23 @@ class Room:
     # 
     # self
     # name (str) - Name of the room
-    # n (bool/Room) -  
+    # n, s, e, w (bool/Room) -  Stores
     # key (str) - The name of the key the room requires to unlock, default None
     def __init__(self, name, n = False, s = False, e = False, w = False, key = None):
 
         # Set Room attributes
-        self._name = name
+        self._name = name # Name of the room
+        # Defining what entrances are there
         self._n = n
         self._s = s
         self._e = e 
         self._w = w 
-        self._key = key
-        self._gui = None
-        self._inventory = items.Inventory()
-        self._enemies = []
+        self._key = key # If the room requires a key
+        self._gui = None # Stores GUI object associated with room
+        self._map = None # Map object associated with the room, set when Map object is initialised
+        self._map_key = None # Where in the grid representation of the map the room is found, set by Map object
+        self._inventory = items.Inventory() # Room inventory
+        self._enemies = [] # Enemies in the room
         self._grid = [
                 [0, 0, self._n, "n", self._n, 0, 0],
                 [0, 1, 1, not self._n, 1, 1, 0],
@@ -109,6 +132,17 @@ class Room:
     def grid(self):
 
         return(self._grid)
+
+    # - set_map()
+    # Sets the map the room is in
+    #
+    # self
+    # game_map (Map) - The map the room can be found in
+    # map_key ([row, column]) - The key value that returns the room in the map
+    def set_map(self, game_map, map_key):
+
+        self._map = game_map
+        self._map_key = map_key
 
     # - find_entrance()
     # Returns the position of a selected entrance
@@ -146,7 +180,14 @@ class Room:
 
         # If we get to this point then there is no entrance return false
         return(False)
-            
+
+    # - north_of()
+    # Returns the room north of this room
+    #
+    # self
+    def north_of(self):
+
+        return(self._map.grid()[self._key[0]][self._key[1]])
 
     # - gui()
     # Returns the gui object

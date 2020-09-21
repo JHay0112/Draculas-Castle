@@ -68,10 +68,9 @@ class Player(Character):
 
         # Set attributes
         self._map = game_map
-        self._room = self._map.start_room() # Room the player is in
-        self._position = [-1, 3] # Position of the player in room [x, y]
+        self._room = self._map.start_room()
 
-        # Set attributes associated with Character
+        # Set attributes associated with Character object
         super().__init__(name, weapon = weapon, armour = armour)
 
         # Replace inventory object with one that will pass to self.use function
@@ -107,12 +106,6 @@ class Player(Character):
             # Add the health effect to our health
             self._health += item.health_effect()
 
-    # - room_obj()
-    # object representation of current room
-    def room_obj(self):
-
-        return(self._map.find_room(self._room))
-
     # - move()
     # Move the player by an amount x/y in the room
     #
@@ -132,25 +125,25 @@ class Player(Character):
         if(type(grid_value) == str):
             # Grid value is string so must be at entrance, we need to move rooms
             if(grid_value == "n"):
-                # Move room position one north
-                self._room[1] += 1
+                # Set room to be north of current room
+                self._room = self._room.north_of()
                 # Update position to be new room southern entrance
-                self._position = self.room_obj().find_entrance("s")
+                self._position = self._room.find_entrance("s")
             elif(grid_value == "e"):
-                # Move room position east
-                self._room[0] += 1
+                # Set room to be east of current room
+                self._room = self._room.east_of()
                 # Update position to be new room west entrance
-                self._position = self.room_obj().find_entrance("w")
+                self._position = self._room.find_entrance("w")
             elif(grid_value == "s"):
-                # Move room position south
-                self._room[1] -= 1
+                # Set room to be south of current room
+                self._room = self._room.south_of()
                 # Update position to be new room north entrance
-                self._position = self.room_obj().find_entrance("n")
+                self._position = self._room.find_entrance("n")
             elif(grid_value == "w"):
-                # Move room position west
-                self._room[0] -= 1
+                # Set room to be west of current room
+                self._room = self._room.west_of()
                 # Update position to be new room east entrance
-                self._position = self.room_obj().find_entrance("e")
+                self._position = self._room.find_entrance("e")
         elif(grid_value == 0):
             # If grid value is zero, not wall, thus move
             self._position[0] += x
