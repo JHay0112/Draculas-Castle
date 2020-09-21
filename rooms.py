@@ -50,7 +50,7 @@ class Map:
     # self
     def start_room(self):
 
-        return(self._start_room)
+        return(self.find_room(self._start_room))
 
     # - boss_room()
     # Returns the room position the player ends in
@@ -58,7 +58,7 @@ class Map:
     # self
     def boss_room(self):
 
-        return(self._boss_room)
+        return(self.find_room(self._boss_room))
 
 # - Room
 # Holds attributes of a room, e.g. entrances, inventory

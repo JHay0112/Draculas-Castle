@@ -64,7 +64,7 @@ class Player(Character):
     # weapon (items.Weapon) - The weapon the player starts with
     # armour (items.Armour) - The armour the player starts with
     # game_map (rooms.Map) - The map of rooms the player can explore
-    def __init__(self, name, weapon = items.Weapon("Stick", [10, 20]), armour = None, game_map = None):
+    def __init__(self, name, game_map, weapon = items.Weapon("Stick", [10, 20]), armour = None):
 
         # Set attributes
         self._map = game_map
@@ -122,8 +122,8 @@ class Player(Character):
     def move(self, x, y):
 
         # Calculate the new x and y
-        new_x = self._position[0] += x
-        new_y = self._position[1] += y
+        new_x = self._position[0] + x
+        new_y = self._position[1] + y
 
         # Get room grid and feed in new x and y vals
         grid_value = self.room_obj().grid()[new_x, new_y]
@@ -131,22 +131,22 @@ class Player(Character):
         # If the grid value is a string
         if(type(grid_value) == str):
             # Grid value is string so must be at entrance, we need to move rooms
-            if(grid_value = "n"):
+            if(grid_value == "n"):
                 # Move room position one north
                 self._room[1] += 1
                 # Update position to be new room southern entrance
                 self._position = self.room_obj().find_entrance("s")
-            elif(grid_value = "e"):
+            elif(grid_value == "e"):
                 # Move room position east
                 self._room[0] += 1
                 # Update position to be new room west entrance
                 self._position = self.room_obj().find_entrance("w")
-            elif(grid_value = "s"):
+            elif(grid_value == "s"):
                 # Move room position south
                 self._room[1] -= 1
                 # Update position to be new room north entrance
                 self._position = self.room_obj().find_entrance("n")
-            elif(grid_value = "w"):
+            elif(grid_value == "w"):
                 # Move room position west
                 self._room[0] -= 1
                 # Update position to be new room east entrance
@@ -185,7 +185,6 @@ class Player(Character):
             self._room = room
             self._position = room.find_entrance(entrance)
             
-
 # - Enemy
 # Child of Character
 class Enemy(Character):
@@ -201,8 +200,14 @@ if(__name__ == "__main__"):
     root = tk.Tk()
     root.geometry("300x100+100+100")
 
+    start_room = rooms.Room("The Entrance", n = True)
+    end_room = rooms.Room("The Bee Room", s = True)
+
+    # Initialise a map
+    game_map = rooms.Map([[start_room], [end_room]], start_room, end_room)
+
     # Create player object
-    player = Player("Jordan Hay")
+    player = Player("Jordan Hay", game_map)
     player.inventory().add_items([
             items.Item("Bees"),
             items.Weapon("A HIVE FULL OF BEES", [10, 300]),
@@ -212,4 +217,7 @@ if(__name__ == "__main__"):
 
     # Display player inventory
     player.inventory().gui(root)
+
+    # Root mainloop
+    root.mainloop()
     
