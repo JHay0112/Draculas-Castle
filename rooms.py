@@ -187,7 +187,31 @@ class Room:
     # self
     def north_of(self):
 
-        return(self._map.grid()[self._key[0]][self._key[1]])
+        return(self._map.grid()[self._key[0]][self._key[1] - 1])
+
+    # - south_of()
+    # Returns the room sooth of this room
+    #
+    # self
+    def south_of(self):
+
+        return(self._map.grid()[self._key[0]][self._key[1] + 1])
+
+    # - east_of()
+    # Returns the room north of this room
+    #
+    # self
+    def east_of(self):
+
+        return(self._map.grid()[self._key[0] + 1][self._key[1]])
+
+    # - west_of()
+    # Returns the room north of this room
+    #
+    # self
+    def west_of(self):
+
+        return(self._map.grid()[self._key[0] - 1][self._key[1]])
 
     # - gui()
     # Returns the gui object
