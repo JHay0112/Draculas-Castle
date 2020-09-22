@@ -54,6 +54,18 @@ class Game:
 
         pass
 
+    def rule_explanation(self):
+
+        pass
+
+    def player_customisation(self):
+
+        pass
+
+    def play_game(self):
+
+        pass
+
     # - battle()
     # Battle the player and an enemy
     #
@@ -115,7 +127,7 @@ if __name__ == "__main__":
     root.title("Dracula's Castle")
 
     # Game setup
-    game = Game(root, castle_map) # Create game object
+    game = Game(castle_map) # Create game object
 
     # Tkinter mainloop
     root.mainloop()
