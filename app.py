@@ -37,11 +37,20 @@ class Game:
     # Initialise the game object
     #
     # self
-    # parent (tkinter) - Parent GUI Object
     # game_map (rooms.Map) - The map the game is played in
-    def __init__(self, parent, game_map):
+    def __init__(self, game_map):
 
-        # Setup GUI
+        # Set attributes
+        self._map = game_map
+        self._parent = None # Stores tkinter parent object
+        self._gui = None # Stores GUI object
+
+    # - gui()
+    # Initialises the GUI aspect of the game
+    #
+    # self
+    # parent (tkinter) - The GUI parent that the game exists in
+    def gui(self, parent):
 
         pass
 
