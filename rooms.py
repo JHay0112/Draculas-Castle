@@ -90,7 +90,7 @@ class Room:
     # 
     # self
     # name (str) - Name of the room
-    # n, s, e, w (bool/Room) -  Stores
+    # n, s, e, w (bool/Room) - Stores
     # key (str) - The name of the key the room requires to unlock, default None
     def __init__(self, name, n = False, s = False, e = False, w = False, key = None):
 
@@ -111,11 +111,32 @@ class Room:
                 [0, 0, self._n, "n", self._n, 0, 0],
                 [0, 1, 1, not self._n, 1, 1, 0],
                 [self._w, 1, 0, 0, 0, 1, self._e],
-                ["w", not self._w, 0, 0, 0, not self._e, "e"],
+                ["w", not self._w, 0, "m", 0, not self._e, "e"],
                 [self._w, 1, 0, 0, 0, 1, self._e],
                 [0, 1, 1, not self._s, 1, 1, 0,],
                 [0, 0, self._s, "s", self._s, 0, 0]
             ] # Grid represenation of this specific room with entrances added
+
+        # Check the entrances
+        self.check_entrance(self._n, "n")
+        self.check_entrance(self._s, "s")
+        self.check_entrance(self._e, "e")
+        self.check_entrance(self._w, "w")
+
+    # - check_entrance
+    # Checks if entrances are linked to specific rooms
+    #
+    # self
+    # entrance_var (bool/Room) - The entrance variable to check
+    # entrance_name (str) - The name of the entrance in the grid
+    def check_entrance(self, entrance_var, entrance_name):
+
+        # If a room object is stored in the entrance_var
+        if(type(entrance_var) == Room):
+            # Find the entrance key
+            map_key = self.find_entrance(entrance_name)
+            # Insert the object into the map
+            self._grid[map_key[0]][map_key[1]] = entrance_var
 
     # - key()
     # Returns the key value
@@ -151,8 +172,6 @@ class Room:
     # entrance (str): Name of the entrance to find
     def find_entrance(self, entrance):
 
-        rows = len(self._grid) # Rows in grid
-
         # Iteration counters
         row_num = 0
         column_num = 0
@@ -162,7 +181,6 @@ class Room:
 
             # Start at column zero
             column_num = 0
-            columns = len(row) # Get columns in row
 
             # For every column in row
             for column in row:
@@ -170,7 +188,7 @@ class Room:
                 # if column is the same as the entrance string
                 if(column == entrance):
                     # Then return the position
-                    return([column_num, row_num])
+                    return([row_num, column_num])
 
                 # Iterate column num
                 column_num += 1
@@ -187,6 +205,7 @@ class Room:
     # self
     def north_of(self):
 
+        # Row up, same column
         return(self._map.grid()[self._map_key[0] - 1][self._map_key[1]])
 
     # - south_of()
@@ -195,6 +214,7 @@ class Room:
     # self
     def south_of(self):
 
+        # Row down, same column
         return(self._map.grid()[self._map_key[0] + 1][self._map_key[1]])
 
     # - east_of()
@@ -203,6 +223,7 @@ class Room:
     # self
     def east_of(self):
 
+        # Column right, same row
         return(self._map.grid()[self._map_key[0]][self._map_key[1] + 1])
 
     # - west_of()
@@ -211,7 +232,16 @@ class Room:
     # self
     def west_of(self):
 
+        # Column left, same row
         return(self._map.grid()[self._map_key[0]][self._map_key[1] - 1])
+
+    # - middle()
+    # Returns the coordinates of the centre of the room
+    #
+    # self
+    def middle(self):
+
+        return([round(len(self._grid[0]) / 2), round(len(self._grid) / 2)])
 
     # - gui()
     # Returns the gui object
@@ -272,7 +302,9 @@ if(__name__ == "__main__"):
 
     # Create Room object
     room = Room("Test Chamber #1", n = True, e = True)
-    room.gui(root, 300, 300)
+    room2 = Room("Not the Test Chamber", w = room)
+
+    room2.gui(root, 300, 300)
 
     # Root mainloop
     root.mainloop()

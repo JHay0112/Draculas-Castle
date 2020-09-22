@@ -69,7 +69,7 @@ class Player(Character):
         # Set attributes
         self._map = game_map
         self._room = self._map.start_room()
-        self._position = [3, 3]
+        self._position = self._room.find_entrance("m")
 
         # Set attributes associated with Character object
         super().__init__(name, weapon = weapon, armour = armour)
@@ -111,20 +111,26 @@ class Player(Character):
     # Move the player by an amount x/y in the room
     #
     # self
-    # x (int): The amount to move the player in x
-    # y (int): The amount to move the player in y
-    def move(self, x, y):
+    # row (int): The amount to move the player in x
+    # column (int): The amount to move the player in y
+    def move(self, row, column):
 
-        # Calculate the new x and y
-        new_x = self._position[0] - y
-        new_y = self._position[1] + x
+        # Calculate the new row and colum
+        new_row = self._position[0] + row
+        new_column = self._position[1] - column
 
         # Get room grid and feed in new x and y vals
-        grid_value = self._room.grid()[new_x][new_y]
+        grid_value = self._room.grid()[new_row][new_column]
 
-        # If the grid value is a string
-        if(type(grid_value) == str):
-            # Grid value is string so must be at entrance, we need to move rooms
+        if((grid_value == 0) or (grid_value == "m")):
+            # If grid value is zero or m, not wall, thus move
+            self._position[0] = new_row
+            self._position[1] = new_column      
+        elif(type(grid_value) == rooms.Room):
+            # If the grid value is a room object then we are jumping rooms
+            self.change_room(grid_value, "m")
+        elif(type(grid_value) == str):
+            # Grid value is string (that is not m) so must be at entrance, we need to move rooms
             if(grid_value == "n"):
                 # Set room to be north of current room
                 self.change_room(self._room.north_of(), "s")
@@ -137,10 +143,6 @@ class Player(Character):
             elif(grid_value == "w"):
                 # Set room to be west of current room
                 self.change_room(self._room.west_of(), "e")
-        elif(grid_value == 0):
-            # If grid value is zero, not wall, thus move
-            self._position[0] -= y
-            self._position[1] += x
         # Else it's a wall, do not move
 
     # - change_room()
@@ -186,7 +188,7 @@ if(__name__ == "__main__"):
     root.geometry("300x100+100+100")
 
     start_room = rooms.Room("The Entrance", n = True)
-    end_room = rooms.Room("The Bee Room", s = True)
+    end_room = rooms.Room("The Bee Room", s = True, n = start_room)
 
     # Initialise a map
     game_map = rooms.Map([[start_room], [end_room]], start_room, end_room)
