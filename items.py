@@ -351,6 +351,15 @@ class Inventory:
         # Refresh the GUI if applicable
         self.gui_refresh()
 
+    # - drop_all()
+    # Removes all items in inventory
+    #
+    # self
+    def drop_all(self):
+
+        # Set items to empty list
+        self._items = []
+
     # - use()
     # Uses the current item if a use command is set
     #

@@ -59,6 +59,24 @@ class Character:
 
         return(self._inventory)
 
+    # - drop_inventory()
+    # Returns all items in player, intended for on the character's death
+    #
+    # self
+    def drop_inventory(self):
+
+        # Get armour and weapon and put in inventory
+        self._inventory.add_item(self._weapon)
+        self._inventory.add_item(self._armour)
+
+        # Get list of items in inventory
+        items = self._inventory.items()
+
+        # Wipe inventory
+        self._inventory.drop_all()
+
+        return(items)
+
 # - Player
 # Child of Character
 class Player(Character):
