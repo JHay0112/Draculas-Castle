@@ -88,7 +88,7 @@ class Player(Character):
     # weapon (items.Weapon) - The weapon the player starts with
     # armour (items.Armour) - The armour the player starts with
     # game_map (rooms.Map) - The map of rooms the player can explore
-    def __init__(self, name, game_map, weapon = items.Weapon("Stick", [1, 4]), armour = None):
+    def __init__(self, name, game_map, weapon = items.Weapon("Stick", 1, 4), armour = None):
 
         # Set attributes
         self._map = game_map
