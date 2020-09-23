@@ -86,7 +86,7 @@ root = tk.Tk() # Tkinter root object
 weapons = [
         items.Weapon("Pointy Stick", 2, 5),
         items.Weapon("Crowbar", 3, 8),
-        items.Weapon("Steaming Vat of Cheese", 5, 9),
+        items.Weapon("Steaming Vat of Molten Cheese", 5, 9),
         items.Weapon("Nokia 3310 Boomerang", 10, 15),
         items.Weapon("Laser Jet Printer", 12, 18)
     ]
@@ -106,12 +106,27 @@ armour = [
 # Dracula
 dracula = characters.Enemy("COUNT DRACULA",
                            1000,
-                           items.Weapon("DRACULA'S STAFF", [50, 100]),
+                           items.Weapon("DRACULA'S STAFF", 50, 100),
                            items.Armour("DRACULA'S SHIELD"))
 
 # Other enemies that can be found in the castle
 castle_enemies = [
-        
+        characters.Enemy("The Goose",
+                         50,
+                         items.Weapon("HONK", 15, 20),
+                         items.Armour("Goose Feathers", 10)),
+        characters.Enemy("Thousands of Bees",
+                         100,
+                         items.Weapon("Sting", 1, 3),
+                         items.Armour("Exoskeleton", 1),
+                         [items.Weapon("Bee Sting Sword", 10, 25)]),
+        characters.Enemy("John",
+                         20,
+                         items.Weapon("Steak Knife", 5, 10),
+                         items.Armour("Torn Jeans", 3)),
+        characters.Enemy("SyntaxError",
+                         5,
+                         items.Weapon("Inconvenience", 1, 10))
     ]
 
 # -- Map/Rooms

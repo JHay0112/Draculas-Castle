@@ -29,13 +29,19 @@ class Character:
     # health (int) - The health of the character
     # weapon (items.Weapon) - The weapon the character uses
     # armour (items.Armour) - The armour the character uses
-    def __init__(self, name, health = 100, weapon = None, armour = None):
+    # items (list) - List of items to add to the character's inventory
+    def __init__(self, name, health = 100, weapon = None, armour = None, items = None):
 
+        # Set attributes
         self._name = name
         self._inventory = items.Inventory() 
         self._weapon = weapon
         self._armour = armour
         self._health = health
+
+        # Add items to inventory
+        if(type(items) == list):
+            self._inventory.add_items(items)
 
     # - weapon()
     # Returns the weapon object the enemy uses
