@@ -115,7 +115,7 @@ potions = [
 dracula = characters.Enemy("COUNT DRACULA",
                            1000,
                            items.Weapon("DRACULA'S STAFF", 50, 100),
-                           items.Armour("DRACULA'S SHIELD"))
+                           items.Armour("DRACULA'S SHIELD", 100))
 
 # Other enemies that can be found in the castle
 castle_enemies = [
