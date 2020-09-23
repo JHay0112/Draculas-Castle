@@ -70,7 +70,7 @@ class Game:
     # Battle the player and an enemy
     #
     # self
-    # enemy (character.Enemy) - The enemy the player will do battle with
+    # enemy (characters.Enemy) - The enemy the player will do battle with
     def battle(self, enemy):
 
         pass
@@ -78,6 +78,41 @@ class Game:
 # - Main
 
 root = tk.Tk() # Tkinter root object
+
+# -- Items
+
+# --- Weapons
+
+weapons = [
+        items.Weapon("Pointy Stick", 2, 5),
+        items.Weapon("Crowbar", 3, 8),
+        items.Weapon("Steaming Vat of Cheese", 5, 9),
+        items.Weapon("Nokia 3310 Boomerang", 10, 15),
+        items.Weapon("Laser Jet Printer", 12, 18)
+    ]
+
+# --- Armour
+
+armour = [
+        items.Armour("MDF Shield", 5),
+        items.Armour("Sheet Metal Shield", 6),
+        items.Armour("Wooden Breastplate", 7),
+        items.Armour("Sheet Metal Breastplate", 10),
+        items.Armour("Nokia 3310 Shin Pads", 15)
+    ]
+
+# -- Enemies
+
+# Dracula
+dracula = characters.Enemy("COUNT DRACULA",
+                           1000,
+                           items.Weapon("DRACULA'S STAFF", [50, 100]),
+                           items.Armour("DRACULA'S SHIELD"))
+
+# Other enemies that can be found in the castle
+castle_enemies = [
+        
+    ]
 
 # -- Map/Rooms
 

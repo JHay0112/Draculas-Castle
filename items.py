@@ -54,10 +54,11 @@ class Weapon(Item):
     # self
     # name (str) - The name of the weapon
     # damage (list [min, max]) - The min and max damage
-    def __init__(self, name, damage):
+    def __init__(self, name, min_dam, max_dam):
 
         # Set weapon attributes
-        self._damage = damage
+        self._min_damage = min_dam
+        self._max_damge = max_dam
 
         # Set attributes associated with parent item
         super().__init__(name, True)
@@ -68,12 +69,8 @@ class Weapon(Item):
     # self
     def attack_damage(self):
 
-        # Get max and min damage values
-        min_damage = self._damage[0]
-        max_damage = self._damage[1]
-
         # Get random value between max and min damage
-        damage = random.randint(min_damage, max_damage)
+        damage = random.randint(self._min_damage, self._max_damage)
 
         return(damage)
 
