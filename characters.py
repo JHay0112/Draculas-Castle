@@ -30,7 +30,7 @@ class Character:
     # weapon (items.Weapon) - The weapon the character uses
     # armour (items.Armour) - The armour the character uses
     # items (list) - List of items to add to the character's inventory
-    def __init__(self, name, health = 100, weapon = None, armour = None, items = None):
+    def __init__(self, name, health = 100, weapon = None, armour = None, invent_items = None):
 
         # Set attributes
         self._name = name
@@ -40,8 +40,8 @@ class Character:
         self._health = health
 
         # Add items to inventory
-        if(type(items) == list):
-            self._inventory.add_items(items)
+        if(type(invent_items) == list):
+            self._inventory.add_items(invent_items)
 
     # - weapon()
     # Returns the weapon object the enemy uses
@@ -70,12 +70,12 @@ class Character:
         self._inventory.add_item(self._armour)
 
         # Get list of items in inventory
-        items = self._inventory.items()
+        invent_items = self._inventory.items()
 
         # Wipe inventory
         self._inventory.drop_all()
 
-        return(items)
+        return(invent_items)
 
 # - Player
 # Child of Character
@@ -221,7 +221,7 @@ if(__name__ == "__main__"):
     player = Player("Jordan Hay", game_map)
     player.inventory().add_items([
             items.Item("Bees"),
-            items.Weapon("A HIVE FULL OF BEES", [10, 300]),
+            items.Weapon("A HIVE FULL OF BEES", 10, 300),
             items.Armour("Honeycomb Kneepads", 100),
             items.Potion("10mL Syringe full of Honey", 10)
         ])

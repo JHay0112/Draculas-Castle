@@ -101,6 +101,14 @@ armour = [
         items.Armour("Nokia 3310 Shin Pads", 15)
     ]
 
+# --- Potions
+
+potions = [
+        items.Potion("Water", 5),
+        items.Potion("Bathwater?", -5),
+        items.Potion("Fresh Mountain Water", 20)
+    ]
+
 # -- Enemies
 
 # Dracula
@@ -119,11 +127,13 @@ castle_enemies = [
                          100,
                          items.Weapon("Sting", 1, 3),
                          items.Armour("Exoskeleton", 1),
-                         [items.Weapon("Bee Sting Sword", 10, 25)]),
+                         [items.Weapon("Bee Sting Sword", 10, 25),
+                          items.Potion("Honey", 20)]),
         characters.Enemy("John",
                          20,
                          items.Weapon("Steak Knife", 5, 10),
-                         items.Armour("Torn Jeans", 3)),
+                         items.Armour("Torn Jeans", 3),
+                         [items.Potion("Homebrew", 10)]),
         characters.Enemy("SyntaxError",
                          5,
                          items.Weapon("Inconvenience", 1, 10))
