@@ -106,7 +106,8 @@ armour = [
 potions = [
         items.Potion("Water", 5),
         items.Potion("Bathwater?", -5),
-        items.Potion("Fresh Mountain Water", 20)
+        items.Potion("Fresh Mountain Water", 20),
+        items.Potion("Hot Chocolate", 10)
     ]
 
 # -- Enemies
