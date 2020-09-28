@@ -32,6 +32,8 @@ class Game:
     EASY = 0.5
     NORMAL = 1
     HARD = 1.5
+    COLUMN = 100 # Column height
+    ROW = 100 # Row height
 
     # - __init__()
     # Initialise the game object
@@ -44,24 +46,95 @@ class Game:
         self._map = game_map
         self._parent = None # Stores tkinter parent object
         self._gui = None # Stores GUI object
+        self._player = characters.Player("Player", game_map) # Initialise the player
 
     # - gui()
     # Initialises the GUI aspect of the game
     #
     # self
     # parent (tkinter) - The GUI parent that the game exists in
-    def gui(self, parent):
+    def gui(self, parent, height, width):
 
-        pass
+        #  Hold parent object
+        self._parent = parent
+        # + height and width
+        self._height = height
+        self._width = width
 
+        # Add keystroke listeners
+        self._parent.bind("w", self.move)
+        self._parent.bind("s", self.move)
+        self._parent.bind("a", self.move)
+        self._parent.bind("d", self.move)
+
+        # Initialise a new frame in the parent
+        self._gui = tk.Frame(self._parent)
+        self._gui.pack(fill = tk.BOTH)
+
+        # Setup the map frame to show map in
+        self._map_frame = tk.Frame(self._gui)
+        self._map_frame.grid(row = 1, column = 1, rowspan = 4, columnspan = 4)
+        # Setup the stat frame for the player
+        self._player_stat_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
+        self._player_stat_frame.grid(row = 0, column = 5, rowspan = 2, columnspan = 1)
+
+        # Refresh the GUI
+        self.gui_refresh()
+
+    # - gui_refresh()
+    # Refreshes the GUI
+    #
+    # self
+    def gui_refresh(self):
+
+        # Check if the GUI is initialised
+        if(self._gui != None):
+
+            # Clear all frames
+            for widget in self._map_frame.winfo_children():
+                widget.destroy()
+
+            self._player.room().gui(self._map_frame, 4 * Game.ROW, 4 * Game.COLUMN, self._player)
+
+    # - move()
+    # Move the player as specified by key
+    #
+    # self
+    # event (tkinter key event)
+    def move(self, event):
+
+        # Get representation of the event
+        event = event.char
+
+        # Interpret input
+        if(event == "w"):
+            # Move up
+            self._player.move(-1, 0)
+        elif(event == "s"):
+            # Move down
+            self._player.move(1, 0)
+        elif(event == "a"):
+            # Move left
+            self._player.move(0, 1)
+        elif(event == "d"):
+            # Move right
+            self._player.move(0, -1)
+
+        # Refresh the GUI
+        self.gui_refresh()
+
+    # - rule_explanation()
+    # GUI to explain the rules to the player
+    #
+    # self
     def rule_explanation(self):
 
         pass
 
-    def player_customisation(self):
-
-        pass
-
+    # - play_game()
+    # Presents the player with the GUI game
+    # 
+    # self    
     def play_game(self):
 
         pass
@@ -184,11 +257,12 @@ castle_map = rooms.Map([
 if __name__ == "__main__":
 
     # Tkinter setup
-    root.geometry("1000x700+100+100")
+    root.geometry("600x600+100+100")
     root.title("Dracula's Castle")
 
     # Game setup
     game = Game(castle_map) # Create game object
+    game.gui(root, 600, 600)
 
     # Tkinter mainloop
     root.mainloop()

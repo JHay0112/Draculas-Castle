@@ -101,6 +101,22 @@ class Player(Character):
         # Replace inventory object with one that will pass to self.use function
         self._inventory = items.Inventory(self.use)
 
+    # - room()
+    # Return current room
+    #
+    # self
+    def room(self):
+
+        return(self._room)
+
+    # - position()
+    # Return player position
+    # 
+    # self
+    def position(self):
+
+        return(self._position)        
+
     # - use()
     # Defines how to use an item
     #

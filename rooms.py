@@ -247,11 +247,14 @@ class Room:
     # Returns the gui object
     #
     # self
-    # parent
-    def gui(self, parent, height, width):
+    # parent (tkinter)
+    # height (int)
+    # width (int)
+    # player (characters.Player)
+    def gui(self, parent, height, width, player = None):
 
         # Initialise the canvas object
-        self._gui = tk.Canvas(parent, height = height, width = width)
+        self._gui = tk.Canvas(parent, height = height, width = width, bg = "grey")
         self._gui.pack(fill = tk.BOTH)
 
         rows = len(self._grid) # Rows in grid
@@ -275,8 +278,6 @@ class Room:
                 # If the column is non-zero and non-string
                 if((column != 0) and (type(column) != str)):
 
-                    fill = "black"
-
                     # Calculate coordinates
                     x0 = column_num * grid_width
                     y0 = row_num * grid_height
@@ -284,13 +285,30 @@ class Room:
                     y1 = y0 + grid_height
 
                     # Generate rectangle
-                    self._gui.create_rectangle(x0, y0, x1, y1, fill = fill, outline = "")
+                    self._gui.create_rectangle(x0, y0, x1, y1, fill = "black", outline = "")
 
                 # Iterate column
                 column_num += 1
 
             # Iterate row
             row_num += 1
+
+        # If player is not none add the player to the map
+        if(player != None):
+            # Get the player positon
+            position = player.position()
+
+            # Calculate coordinates
+            x0 = position[1] * grid_width
+            y0 = position[0] * grid_height
+            x1 = x0 + grid_width
+            y1 = y0 + grid_height
+
+            # Generate rectangle
+            self._gui.create_rectangle(x0, y0, x1, y1, fill = "maroon", outline = "")
+
+        # Add room name to canvas
+        self._gui.create_text(width/2, height/2, text = self._name, fill = "white")
 
 # - Main
 # Used for testing code associated with this module so this code should only run when it is main
