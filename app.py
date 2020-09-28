@@ -32,6 +32,8 @@ class Game:
     EASY = 0.5
     NORMAL = 1
     HARD = 1.5
+    MAP_HEIGHT = 400
+    MAP_WIDTH = 400
 
     # - __init__()
     # Initialise the game object
@@ -52,16 +54,39 @@ class Game:
     # parent (tkinter) - The GUI parent that the game exists in
     def gui(self, parent):
 
-        pass
+        #  Hold parent object
+        self._parent = parent
 
+        # Initialise a new frame in the parent
+        self._gui = tk.Frame(self._parent)
+        self._gui.pack(fill = tk.BOTH)
+
+        # Setup the map frame to show map in
+        self._map_frame = tk.Frame(self._gui, height = Game.MAP_HEIGHT, width = Game.MAP_WIDTH, bg = "blue")
+        self._map_frame.grid(row = 0, column = 0, rowspan = 2, columnspan = 4)
+        # Put the map of the first room into the frame
+        self._map.start_room().gui(self._map_frame, Game.MAP_HEIGHT, Game.MAP_WIDTH)
+
+    # - rule_explanation()
+    # GUI to explain the rules to the player
+    #
+    # self
     def rule_explanation(self):
 
         pass
 
+    # - player_customisation()
+    # Presents the player with a GUI to initialise player
+    #
+    # self
     def player_customisation(self):
 
         pass
 
+    # - play_game()
+    # Presents the player with the GUI game
+    # 
+    # self    
     def play_game(self):
 
         pass
@@ -184,11 +209,12 @@ castle_map = rooms.Map([
 if __name__ == "__main__":
 
     # Tkinter setup
-    root.geometry("1000x700+100+100")
+    root.geometry("600x600+100+100")
     root.title("Dracula's Castle")
 
     # Game setup
     game = Game(castle_map) # Create game object
+    game.gui(root)
 
     # Tkinter mainloop
     root.mainloop()
