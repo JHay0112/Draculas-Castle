@@ -32,8 +32,8 @@ class Game:
     EASY = 0.5
     NORMAL = 1
     HARD = 1.5
-    MAP_HEIGHT = 400
-    MAP_WIDTH = 400
+    COLUMN = 100 # Column height
+    ROW = 100 # Row height
 
     # - __init__()
     # Initialise the game object
@@ -52,20 +52,26 @@ class Game:
     #
     # self
     # parent (tkinter) - The GUI parent that the game exists in
-    def gui(self, parent):
+    def gui(self, parent, height, width):
 
         #  Hold parent object
         self._parent = parent
+        # + height and width
+        self._height = height
+        self._width = width
 
         # Initialise a new frame in the parent
         self._gui = tk.Frame(self._parent)
         self._gui.pack(fill = tk.BOTH)
 
         # Setup the map frame to show map in
-        self._map_frame = tk.Frame(self._gui, height = Game.MAP_HEIGHT, width = Game.MAP_WIDTH, bg = "blue")
-        self._map_frame.grid(row = 0, column = 0, rowspan = 2, columnspan = 4)
+        self._map_frame = tk.Frame(self._gui)
+        self._map_frame.grid(row = 1, column = 1, rowspan = 4, columnspan = 4)
         # Put the map of the first room into the frame
-        self._map.start_room().gui(self._map_frame, Game.MAP_HEIGHT, Game.MAP_WIDTH)
+        self._map.start_room().gui(self._map_frame, 4 * Game.ROW, 4 * Game.COLUMN)
+
+        self._player_stat_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
+        self._player_stat_frame.grid(row = 0, column = 5, rowspan = 2, columnspan = 1)
 
     # - rule_explanation()
     # GUI to explain the rules to the player
@@ -214,7 +220,7 @@ if __name__ == "__main__":
 
     # Game setup
     game = Game(castle_map) # Create game object
-    game.gui(root)
+    game.gui(root, 600, 600)
 
     # Tkinter mainloop
     root.mainloop()
