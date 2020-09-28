@@ -160,7 +160,18 @@ class Player(Character):
         new_column = self._position[1] - column
 
         # Get room grid and feed in new x and y vals
-        grid_value = self._room.grid()[new_row][new_column]
+        try:
+            grid_value = self._room.grid()[new_row][new_column]
+        except(IndexError):
+            # Tried to access an area outside of the grid
+            self.move(0, 0) # Checking no move in case this is a door
+            return
+
+        # If the move makes a negative Index
+        if((new_row < 0) or (new_column < 0)):
+            # Tried to access an area outside of the grid
+            self.move(0, 0) # Checking no move in case this is a door
+            return
 
         if((grid_value == 0) or (grid_value == "m")):
             # If grid value is zero or m, not wall, thus move
@@ -209,8 +220,11 @@ class Player(Character):
 
         if(not locked):
             # Set current room to new room
-            self._room = room
-            self._position = room.find_entrance(entrance)
+            new_position = room.find_entrance(entrance)
+            # Make sure the new room and entrance really exist first
+            if(new_position != False):
+                self._room = room
+                self._position = new_position
             
 # - Enemy
 # Child of Character
