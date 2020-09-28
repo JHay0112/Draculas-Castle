@@ -309,6 +309,9 @@ class Room:
             # Generate rectangle
             self._gui.create_rectangle(x0, y0, x1, y1, fill = "red", outline = "")
 
+        # Add room name to canvas
+        self._gui.create_text(width/2, height/2, text = self._name)
+
 # - Main
 # Used for testing code associated with this module so this code should only run when it is main
 if(__name__ == "__main__"):
