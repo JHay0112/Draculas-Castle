@@ -247,8 +247,11 @@ class Room:
     # Returns the gui object
     #
     # self
-    # parent
-    def gui(self, parent, height, width):
+    # parent (tkinter)
+    # height (int)
+    # width (int)
+    # player (characters.Player)
+    def gui(self, parent, height, width, player = None):
 
         # Initialise the canvas object
         self._gui = tk.Canvas(parent, height = height, width = width)
@@ -291,6 +294,20 @@ class Room:
 
             # Iterate row
             row_num += 1
+
+        # If player is not none add the player to the map
+        if(player != None):
+            # Get the player positon
+            position = player.position()
+
+            # Calculate coordinates
+            x0 = position[1] * grid_width
+            y0 = position[0] * grid_height
+            x1 = x0 + grid_width
+            y1 = y0 + grid_height
+
+            # Generate rectangle
+            self._gui.create_rectangle(x0, y0, x1, y1, fill = "red", outline = "")
 
 # - Main
 # Used for testing code associated with this module so this code should only run when it is main

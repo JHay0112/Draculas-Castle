@@ -46,6 +46,7 @@ class Game:
         self._map = game_map
         self._parent = None # Stores tkinter parent object
         self._gui = None # Stores GUI object
+        self._player = characters.Player("Player", game_map) # Initialise the player
 
     # - gui()
     # Initialises the GUI aspect of the game
@@ -60,6 +61,12 @@ class Game:
         self._height = height
         self._width = width
 
+        # Add keystroke listeners
+        self._parent.bind("w", self.move)
+        self._parent.bind("s", self.move)
+        self._parent.bind("a", self.move)
+        self._parent.bind("d", self.move)
+
         # Initialise a new frame in the parent
         self._gui = tk.Frame(self._parent)
         self._gui.pack(fill = tk.BOTH)
@@ -67,25 +74,60 @@ class Game:
         # Setup the map frame to show map in
         self._map_frame = tk.Frame(self._gui)
         self._map_frame.grid(row = 1, column = 1, rowspan = 4, columnspan = 4)
-        # Put the map of the first room into the frame
-        self._map.start_room().gui(self._map_frame, 4 * Game.ROW, 4 * Game.COLUMN)
-
+        # Setup the stat frame for the player
         self._player_stat_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
         self._player_stat_frame.grid(row = 0, column = 5, rowspan = 2, columnspan = 1)
+
+        # Refresh the GUI
+        self.gui_refresh()
+
+    # - gui_refresh()
+    # Refreshes the GUI
+    #
+    # self
+    def gui_refresh(self):
+
+        # Check if the GUI is initialised
+        if(self._gui != None):
+
+            # Clear all frames
+            for widget in self._map_frame.winfo_children():
+                widget.destroy()
+
+            self._player.room().gui(self._map_frame, 4 * Game.ROW, 4 * Game.COLUMN, self._player)
+
+    # - move()
+    # Move the player as specified by key
+    #
+    # self
+    # event (tkinter key event)
+    def move(self, event):
+
+        # Get representation of the event
+        event = event.char
+
+        # Interpret input
+        if(event == "w"):
+            # Move up
+            self._player.move(-1, 0)
+        elif(event == "s"):
+            # Move down
+            self._player.move(1, 0)
+        elif(event == "a"):
+            # Move left
+            self._player.move(0, 1)
+        elif(event == "d"):
+            # Move right
+            self._player.move(0, -1)
+
+        # Refresh the GUI
+        self.gui_refresh()
 
     # - rule_explanation()
     # GUI to explain the rules to the player
     #
     # self
     def rule_explanation(self):
-
-        pass
-
-    # - player_customisation()
-    # Presents the player with a GUI to initialise player
-    #
-    # self
-    def player_customisation(self):
 
         pass
 
