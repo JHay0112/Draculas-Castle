@@ -58,7 +58,7 @@ class Weapon(Item):
 
         # Set weapon attributes
         self._min_damage = min_dam
-        self._max_damge = max_dam
+        self._max_damage = max_dam
 
         # Set attributes associated with parent item
         super().__init__(name, True)
@@ -387,7 +387,7 @@ if(__name__ == "__main__"):
     # Setup an Inventory
     invent = Inventory(print) # Associated use command is print the item
     invent.add_items([Item("Bees"),
-                      Weapon("The Bee Sword", [10, 1000]),
+                      Weapon("The Bee Sword", 10, 1000),
                       Armour("The Bee Chestplate", 100),
                       Potion("Potion of Bees", 20),
                       Key("The Beehive Key")])

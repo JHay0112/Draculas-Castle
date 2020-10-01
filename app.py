@@ -242,7 +242,7 @@ castle_map = rooms.Map([
         rooms.Room("West Hallway", n = True, e = True, w = True),
         rooms.Room("Main Hall", n = True, s = True, e = True, w = True),
         rooms.Room("Corridor", s = True, w = True),
-        rooms.Room("Cellar", n = True)
+        cellar
     ],
     [
         rooms.Room("Drawing Room", n = True, e = True),
