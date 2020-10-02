@@ -73,10 +73,16 @@ class Game:
 
         # Setup the map frame to show map in
         self._map_frame = tk.Frame(self._gui)
-        self._map_frame.grid(row = 1, column = 1, rowspan = 4, columnspan = 4)
+        self._map_frame.grid(row = 0, column = 0, rowspan = 4, columnspan = 4)
         # Setup the stat frame for the player
         self._player_stat_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
-        self._player_stat_frame.grid(row = 0, column = 5, rowspan = 2, columnspan = 1)
+        self._player_stat_frame.grid(row = 0, column = 4, rowspan = 1, columnspan = 2)
+        # Setup the stat frame for the enemy
+        self._enemy_stat_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
+        self._enemy_stat_frame.grid(row = 2, column = 4, rowspan = 1, columnspan = 2)
+        # Setup the log frame
+        self._log_frame = tk.Frame(self._gui, height = 4 * Game.COLUMN, width = 2 * Game.ROW)
+        self._log_frame.grid(row = 3, column = 4, rowspan = 4, columnspan = 2)
 
         # Refresh the GUI
         self.gui_refresh()
