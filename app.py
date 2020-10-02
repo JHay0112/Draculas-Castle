@@ -81,7 +81,7 @@ class Game:
         self._enemy_stat_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
         self._enemy_stat_frame.grid(row = 2, column = 4, rowspan = 1, columnspan = 2)
         # Setup the log frame
-        self._log_frame = tk.Frame(self._gui, height = 4 * Game.COLUMN, width = 2 * Game.ROW)
+        self._log_frame = tk.Frame(self._gui, height = 3 * Game.COLUMN, width = 2 * Game.ROW)
         self._log_frame.grid(row = 3, column = 4, rowspan = 4, columnspan = 2)
 
         # Refresh the GUI
@@ -263,7 +263,7 @@ castle_map = rooms.Map([
 if __name__ == "__main__":
 
     # Tkinter setup
-    root.geometry("600x600+100+100")
+    root.geometry("600x500+100+100")
     root.title("Dracula's Castle")
 
     # Game setup
