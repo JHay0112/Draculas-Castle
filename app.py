@@ -83,6 +83,12 @@ class Game:
         # Setup the log frame
         self._log_frame = tk.Frame(self._gui, height = 3 * Game.COLUMN, width = 2 * Game.ROW)
         self._log_frame.grid(row = 3, column = 4, rowspan = 4, columnspan = 2)
+        # Setup player inventory frame
+        self._player_invent_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
+        self._player_invent_frame.grid(row = 4, column = 0, columnspan = 2)
+        # Setup room inventory frame
+        self._room_invent_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
+        self._room_invent_frame.grid(row = 4, column = 2, columnspan = 2)
 
         # Refresh the GUI
         self.gui_refresh()
