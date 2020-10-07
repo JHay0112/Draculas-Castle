@@ -102,9 +102,21 @@ class Game:
         # Check if the GUI is initialised
         if(self._gui != None):
 
+            # List of frames to clear
+            frames = [
+                self._map_frame,
+                self._player_stat_frame,
+                self._enemy_stat_frame,
+                self._log_frame,
+                self._player_invent_frame,
+                self._room_invent_frame
+            ]
+
             # Clear all frames
-            for widget in self._map_frame.winfo_children():
-                widget.destroy()
+            for frame in frames:
+                # For every frame clear every widget that is a child of the frame
+                for widget in frame.winfo_children():
+                    widget.destroy() # Destroy the child widget
 
             self._player.room().gui(self._map_frame, 4 * Game.ROW, 4 * Game.COLUMN, self._player)
 
