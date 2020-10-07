@@ -100,6 +100,8 @@ class Game:
         self._current_room.gui(self._map_frame)
         # Setup player inventory
         self._player.inventory().gui(self._player_invent_frame)
+        # Setup room inventory
+        self._current_room.inventory().gui(self._room_invent_frame)
 
         # Refresh the GUI
         self.gui_refresh()
@@ -133,6 +135,8 @@ class Game:
 
                 # Draw new map
                 self._current_room.gui(self._map_frame)
+                # Draw new inventory
+                self._current_room.inventory().gui(self._room_invent_frame)
 
             # Draw player on map GUI
             self._current_room.draw_player(self._player)
