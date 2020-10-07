@@ -85,6 +85,10 @@ class Map:
 # Version: 0.1
 class Room:
 
+    # Constants
+    HEIGHT = 400
+    WIDTH = 400
+
     # - __init__()
     # Initialise a room object
     # 
@@ -106,6 +110,7 @@ class Room:
         self._map = None # Map object associated with the room, set when Map object is initialised
         self._map_key = None # Where in the grid representation of the map the room is found, set by Map object
         self._inventory = items.Inventory() # Room inventory
+        self._player = None # The player's canvas object
         self._enemies = [] # Enemies in the room
         self._grid = [
                 [0, 0, self._n, "n", self._n, 0, 0],
@@ -153,6 +158,14 @@ class Room:
     def grid(self):
 
         return(self._grid)
+
+    # - inventory()
+    # Returns the room's inventory object
+    #
+    # self
+    def inventory(self):
+
+        return(self._inventory)
 
     # - set_map()
     # Sets the map the room is in
@@ -244,14 +257,16 @@ class Room:
         return([round(len(self._grid[0]) / 2), round(len(self._grid) / 2)])
 
     # - gui()
-    # Returns the gui object
+    # Creates the gui object
     #
     # self
     # parent (tkinter)
     # height (int)
     # width (int)
-    # player (characters.Player)
-    def gui(self, parent, height, width, player = None):
+    def gui(self, parent):
+
+        height = Room.HEIGHT
+        width = Room.WIDTH
 
         # Initialise the canvas object
         self._gui = tk.Canvas(parent, height = height, width = width, bg = "grey")
@@ -293,22 +308,39 @@ class Room:
             # Iterate row
             row_num += 1
 
-        # If player is not none add the player to the map
-        if(player != None):
-            # Get the player positon
-            position = player.position()
-
-            # Calculate coordinates
-            x0 = position[1] * grid_width
-            y0 = position[0] * grid_height
-            x1 = x0 + grid_width
-            y1 = y0 + grid_height
-
-            # Generate rectangle
-            self._gui.create_rectangle(x0, y0, x1, y1, fill = "maroon", outline = "")
-
         # Add room name to canvas
         self._gui.create_text(width/2, height/2, text = self._name, fill = "white")
+
+    # - draw_player()
+    # Draw's the player onto the map
+    #
+    # self
+    # player (characters.Player): The player object to draw
+    def draw_player(self, player):
+
+        rows = len(self._grid) # Rows in grid
+        grid_height = Room.HEIGHT/rows # Calculate the height of each grid piece
+        columns = len(self._grid[0]) # Get columns in first row
+        grid_width = Room.WIDTH/columns # Calculate the width of each grid piece
+
+        # Check if player has already been draw
+        if(self._player != None):
+            # If so, remove it
+            self._gui.delete(self._player)
+            self._player = None
+
+        # Get player position
+        position = player.position()
+        
+        # Calculate coordinates
+        x0 = position[1] * grid_width
+        y0 = position[0] * grid_height
+        x1 = x0 + grid_width
+        y1 = y0 + grid_height
+
+        # Generate rectangle
+        self._player = self._gui.create_rectangle(x0, y0, x1, y1, fill = "maroon", outline = "")
+
 
 # - Main
 # Used for testing code associated with this module so this code should only run when it is main

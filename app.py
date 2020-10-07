@@ -48,6 +48,9 @@ class Game:
         self._gui = None # Stores GUI object
         self._player = characters.Player("Player", game_map) # Initialise the player
 
+        # TESTING ONLY
+        self._map.start_room().inventory().add_item(items.Weapon("Johnson's Axe", 10, 20))
+
     # - gui()
     # Initialises the GUI aspect of the game
     #
@@ -90,6 +93,11 @@ class Game:
         self._room_invent_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
         self._room_invent_frame.grid(row = 4, column = 2, columnspan = 2)
 
+        # Store current room
+        self._current_room = self._player.room()
+
+        # Draw map
+        self._current_room.gui(self._map_frame)
         # Setup player inventory
         self._player.inventory().gui(self._player_invent_frame)
 
@@ -105,26 +113,29 @@ class Game:
         # Check if the GUI is initialised
         if(self._gui != None):
 
-            # List of frames to clear
-            # NOTE: DOES NOT INCLUDE PLAYER INVENTORY FRAME
-            frames = [
-                self._map_frame,
-                self._player_stat_frame,
-                self._enemy_stat_frame,
-                self._log_frame,
-                self._room_invent_frame
-            ]
+             # Check if the room has changed
+            if(self._current_room != self._player.room()):
 
-            # Clear all frames
-            for frame in frames:
-                # For every frame clear every widget that is a child of the frame
-                for widget in frame.winfo_children():
-                    widget.destroy() # Destroy the child widget
+                # Frames that will need cleared
+                frames = [
+                    self._map_frame,
+                    self._room_invent_frame
+                ]
 
-            # Set map GUI
-            self._player.room().gui(self._map_frame, 4 * Game.ROW, 4 * Game.COLUMN, self._player)
-            # Refresh player inventory
-            self._player.inventory().gui_refresh()
+                # Clear all frames
+                for frame in frames:
+                    # For every frame clear every widget that is a child of the frame
+                    for widget in frame.winfo_children():
+                        widget.destroy() # Destroy the child widget
+
+                # Update current room
+                self._current_room = self._player.room()
+
+                # Draw new map
+                self._current_room.gui(self._map_frame)
+
+            # Draw player on map GUI
+            self._current_room.draw_player(self._player)
 
     # - move()
     # Move the player as specified by key
