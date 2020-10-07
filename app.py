@@ -90,6 +90,9 @@ class Game:
         self._room_invent_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
         self._room_invent_frame.grid(row = 4, column = 2, columnspan = 2)
 
+        # Setup player inventory
+        self._player.inventory().gui(self._player_invent_frame)
+
         # Refresh the GUI
         self.gui_refresh()
 
@@ -103,12 +106,12 @@ class Game:
         if(self._gui != None):
 
             # List of frames to clear
+            # NOTE: DOES NOT INCLUDE PLAYER INVENTORY FRAME
             frames = [
                 self._map_frame,
                 self._player_stat_frame,
                 self._enemy_stat_frame,
                 self._log_frame,
-                self._player_invent_frame,
                 self._room_invent_frame
             ]
 
@@ -118,7 +121,10 @@ class Game:
                 for widget in frame.winfo_children():
                     widget.destroy() # Destroy the child widget
 
+            # Set map GUI
             self._player.room().gui(self._map_frame, 4 * Game.ROW, 4 * Game.COLUMN, self._player)
+            # Refresh player inventory
+            self._player.inventory().gui_refresh()
 
     # - move()
     # Move the player as specified by key
