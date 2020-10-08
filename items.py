@@ -155,6 +155,15 @@ class Inventory:
         self._use_command = use_command 
         self._gui = None # Store GUI object (Frame)
         self._position = 0 # Store where in the list of items the GUI is viewing
+
+    # - set_use_command()
+    # Set the use command associated with the inventory
+    #
+    # self
+    # use_command (Function) - the function to run when an item is used
+    def set_use_command(self, use_command):
+
+        self._use_command = use_command
         
     # - gui()
     # Initialise a GUI object in the inventory
