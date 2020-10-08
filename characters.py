@@ -115,7 +115,15 @@ class Player(Character):
     # self
     def position(self):
 
-        return(self._position)        
+        return(self._position)    
+
+    # - inventory()
+    # Return player inventory object
+    # 
+    # self
+    def inventory(self):
+
+        return(self._inventory)    
 
     # - use()
     # Defines how to use an item

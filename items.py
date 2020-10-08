@@ -163,12 +163,16 @@ class Inventory:
     # parent (Tkinter) - The parent frame/root object the gui is displayed in
     def gui(self, parent):
 
+        # Button width, spent some time weaking this so figured it was best a constant
+        BUTTON_WIDTH = 7
+
         # Create frame to hold items and pack it
-        self._gui = tk.Frame(parent, height = 200)
+        self._gui = tk.Frame(parent, height = 100, width = 200)
+        self._gui.pack_propagate(False)
         self._gui.pack(fill = tk.BOTH)
 
         # Create a frame for the item to be displayed in
-        self._item_frame = tk.Frame(self._gui, height = 65)
+        self._item_frame = tk.Frame(self._gui, height = 60)
         self._item_frame.pack_propagate(False)
         self._item_frame.pack(fill = tk.X,
                               ipadx = 5,
@@ -183,27 +187,31 @@ class Inventory:
         self._up_button = ttk.Button(self._control_frame,
                                      text = "↑",
                                      state = tk.DISABLED,
-                                     command = self.gui_up)
+                                     command = self.gui_up,
+                                     width = BUTTON_WIDTH)
         self._up_button.pack(side = tk.LEFT, expand = True)
 
         # Down button
         self._down_button = ttk.Button(self._control_frame,
                                        text = "↓",
                                        state = tk.DISABLED,
-                                       command = self.gui_down)
+                                       command = self.gui_down,
+                                       width = BUTTON_WIDTH)
         self._down_button.pack(side = tk.LEFT, expand = True)
 
         # Use button
         self._use_button = ttk.Button(self._control_frame,
                                       text = "USE",
                                       state = tk.DISABLED,
-                                      command = self.use)
+                                      command = self.use,
+                                      width = BUTTON_WIDTH)
         self._use_button.pack(side = tk.LEFT, expand = True)
 
         # Discard button
         self._drop_button = ttk.Button(self._control_frame,
                                        text = "DROP",
-                                       state = tk.DISABLED)
+                                       state = tk.DISABLED,
+                                       width = BUTTON_WIDTH)
         self._drop_button.pack(side = tk.LEFT, expand = True)
 
         # Refresh the GUI
@@ -394,3 +402,6 @@ if(__name__ == "__main__"):
 
     # Initialise a GUI representation of the GUI
     invent.gui(root)
+    invent.gui_refresh()
+
+    root.mainloop()
