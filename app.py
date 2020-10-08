@@ -40,7 +40,10 @@ class Game:
     #
     # self
     # game_map (rooms.Map) - The map the game is played in
-    def __init__(self, game_map):
+    # boss_room_key (items.Key) - The key object that will unlock the boss room
+    # enemies (list) - List containing enemy objects to be placed through the map
+    # items (list) - List containing item objects to be placed through the map
+    def __init__(self, game_map, boss_room_key, enemies = None, items = None):
 
         # Set attributes
         self._map = game_map
@@ -203,6 +206,11 @@ root = tk.Tk() # Tkinter root object
 
 # -- Items
 
+# --- Keys
+
+# Key to Dracula's crypt
+draculas_key = items.Key("THE KEY TO THE CRYPT")
+
 # --- Weapons
 
 weapons = [
@@ -231,6 +239,12 @@ potions = [
         items.Potion("Fresh Mountain Water", 20),
         items.Potion("Hot Chocolate", 10)
     ]
+
+# --- Collection of all items
+
+castle_items = weapons
+castle_items.extend(armour)
+castle_items.extend(potions)
 
 # -- Enemies
 
@@ -268,7 +282,7 @@ castle_enemies = [
 toilet = rooms.Room("Toilet", s = True)
 cellar = rooms.Room("Cellar", n = True, w = toilet)
 entrance_hall = rooms.Room("Entrance Hall", n = True)
-crypt = rooms.Room("THE CRYPT")
+crypt = rooms.Room("THE CRYPT", key = draculas_key)
 
 # Create Map of rooms
 castle_map = rooms.Map([
@@ -310,7 +324,7 @@ if __name__ == "__main__":
     root.title("Dracula's Castle")
 
     # Game setup
-    game = Game(castle_map) # Create game object
+    game = Game(castle_map, draculas_key, castle_enemies, castle_items) # Create game object
     game.gui(root, 600, 600)
 
     # Tkinter mainloop
