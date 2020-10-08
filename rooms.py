@@ -167,6 +167,23 @@ class Room:
 
         return(self._inventory)
 
+    # - enemies()
+    # Returns list of enemies in the room
+    # 
+    # self
+    def enemies(self):
+
+        return(self._enemies)
+
+    # - add_enemy()
+    # Add enemy to list of enemies
+    # 
+    # self
+    # enemy (characters.Enemy) - The enemy to add
+    def add_enemy(self, enemy):
+
+        self._enemies.append(enemy)
+
     # - set_map()
     # Sets the map the room is in
     #

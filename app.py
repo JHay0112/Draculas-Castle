@@ -15,6 +15,7 @@
 # (Modules others have made)
 import tkinter as tk # GUI
 from tkinter import ttk # Refined GUI elements
+import random # Generate random values
 
 # -- Components
 # (Modules I have made)
@@ -42,8 +43,8 @@ class Game:
     # game_map (rooms.Map) - The map the game is played in
     # boss_room_key (items.Key) - The key object that will unlock the boss room
     # enemies (list) - List containing enemy objects to be placed through the map
-    # items (list) - List containing item objects to be placed through the map
-    def __init__(self, game_map, boss_room_key, enemies = None, items = None):
+    # castle_items (list) - List containing item objects to be placed through the map
+    def __init__(self, game_map, boss_room_key, enemies = None, castle_items = None):
 
         # Set attributes
         self._map = game_map
@@ -51,8 +52,19 @@ class Game:
         self._gui = None # Stores GUI object
         self._player = characters.Player("Player", game_map) # Initialise the player
 
-        # TESTING ONLY
-        self._map.start_room().inventory().add_item(items.Weapon("Johnson's Axe", 10, 20))
+        # For every item
+        for item in castle_items:
+            # Randomly select a room and add the item
+            row = random.choice(self._map.grid())
+            room = random.choice(row)
+            room.inventory().add_item(item)
+
+        # For every enemy
+        for enemy in enemies:
+            # Randomly select a room and add the enemy
+            row = random.choice(self._map.grid())
+            room = random.choice(row)
+            room.add_enemy(enemy)
 
     # - gui()
     # Initialises the GUI aspect of the game
