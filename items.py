@@ -254,7 +254,8 @@ class Inventory:
                 self.check_buttons(current_item)
 
                 # Display item info
-                tk.Label(self._item_frame, text = current_item.name()).pack(anchor = tk.W, pady = 10)
+                tk.Label(self._item_frame, text = current_item.name()).pack(anchor = tk.W, pady = (10, 0))
+                tk.Label(self._item_frame, text = type(current_item).__name__).pack(anchor = tk.W)
 
     # - check_buttons()
     # Checks and sets the states of the control buttons
