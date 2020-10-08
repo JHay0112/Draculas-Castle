@@ -340,6 +340,8 @@ class Room:
 
         # Generate rectangle
         self._player = self._gui.create_rectangle(x0, y0, x1, y1, fill = "maroon", outline = "")
+        # Lower player below text
+        self._gui.tag_lower(self._player)
 
 
 # - Main
@@ -354,7 +356,7 @@ if(__name__ == "__main__"):
     room = Room("Test Chamber #1", n = True, e = True)
     room2 = Room("Not the Test Chamber", w = room)
 
-    room2.gui(root, 300, 300)
+    room2.gui(root)
 
     # Root mainloop
     root.mainloop()
