@@ -15,6 +15,7 @@
 # (Modules others have made)
 import tkinter as tk # GUI
 from tkinter import ttk # Refined GUI elements
+from tkinter import scrolledtext # Scrolled text element
 import random # Generate random values
 
 # -- Components
@@ -99,8 +100,8 @@ class Game:
         self._enemy_stat_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
         self._enemy_stat_frame.grid(row = 2, column = 4, rowspan = 1, columnspan = 2)
         # Setup the log frame
-        self._log_frame = tk.Frame(self._gui, height = 3 * Game.COLUMN, width = 2 * Game.ROW)
-        self._log_frame.grid(row = 3, column = 4, rowspan = 4, columnspan = 2)
+        self._log_frame = tk.Frame(self._gui, height = 2 * Game.COLUMN, width = 2 * Game.ROW)
+        self._log_frame.grid(row = 3, column = 4, rowspan = 4, columnspan = 1)
         # Setup player inventory frame
         self._player_invent_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
         self._player_invent_frame.grid(row = 4, column = 0, columnspan = 2)
@@ -115,10 +116,22 @@ class Game:
 
         # Draw map
         self._current_room.gui(self._map_frame)
+        
         # Setup player inventory
         self._player.inventory().gui(self._player_invent_frame)
         # Setup room inventory
         self._current_room.inventory().gui(self._room_invent_frame)
+
+        # Setup text log
+        self._log = scrolledtext.ScrolledText(self._log_frame,
+                                              state = tk.DISABLED,
+                                              width = 21,
+                                              height = 18,
+                                              wrap = tk.WORD)
+        self._log.pack(fill = tk.BOTH, pady = (0, 10))
+
+        # Log game start
+        self.log("Welcome to Dracula's Castle!")
 
         # Refresh the GUI
         self.gui_refresh()
@@ -186,6 +199,20 @@ class Game:
 
         # Refresh the GUI
         self.gui_refresh()
+
+    # - log()
+    # Logs an event to the text log
+    #
+    # self
+    # text (str) - The text to log to the log
+    def log(self, text):
+
+        # Unlock log
+        self._log.configure(state = tk.NORMAL)
+        # Write to log
+        self._log.insert(tk.INSERT, f"{text}\n")
+        # Lock log
+        self._log.configure(state = tk.DISABLED)
 
     # - rule_explanation()
     # GUI to explain the rules to the player
