@@ -211,6 +211,8 @@ class Game:
         self._log.configure(state = tk.NORMAL)
         # Write to log
         self._log.insert(tk.INSERT, f"{text}\n")
+        # Scroll to bottom
+        self._log.see(tk.END)
         # Lock log
         self._log.configure(state = tk.DISABLED)
 
