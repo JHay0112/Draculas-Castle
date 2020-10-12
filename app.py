@@ -266,6 +266,8 @@ class Game:
     # self
     def retreat(self):
 
+        # Log the retreat
+        self.log("You retreated!")
         # Move the player back one room
         self._player.change_room(self._previous_room, "m")
         # Turn on map controls
