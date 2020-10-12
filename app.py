@@ -102,6 +102,15 @@ class Game:
         # Setup the log frame
         self._log_frame = tk.Frame(self._gui, height = 2 * Game.COLUMN, width = 2 * Game.ROW)
         self._log_frame.grid(row = 3, column = 4, rowspan = 4, columnspan = 1)
+        self._log = scrolledtext.ScrolledText(self._log_frame,
+                                              state = tk.DISABLED,
+                                              width = 21,
+                                              height = 16,
+                                              wrap = tk.WORD)
+        self._log.pack(fill = tk.X)
+        # Setup log control frame
+        self._log_controls = tk.Frame(self._log_frame, height = 20)
+        self._log_controls.pack(fill = tk.X, pady = (2, 5))
         # Setup player inventory frame
         self._player_invent_frame = tk.Frame(self._gui, height = Game.COLUMN, width = 2 * Game.ROW)
         self._player_invent_frame.grid(row = 4, column = 0, columnspan = 2)
@@ -122,17 +131,14 @@ class Game:
         # Setup room inventory
         self._current_room.inventory().gui(self._room_invent_frame)
 
-        # Setup text log
-        self._log = scrolledtext.ScrolledText(self._log_frame,
-                                              state = tk.DISABLED,
-                                              width = 21,
-                                              height = 18,
-                                              wrap = tk.WORD)
-        self._log.pack(fill = tk.BOTH, pady = (0, 10))
+        # Setup control buttons
+        self._attack = ttk.Button(self._log_controls, text = "ATTACK", state = tk.DISABLED)
+        self._attack.pack(fill = tk.X, side = tk.LEFT, expand = True)
 
         # Log game start
         self.log("Welcome to Dracula's Castle!")
 
+        # Print out a tutorial in log
         self.log("""Tutorial:
 Use WASD to move.
 """)
@@ -219,22 +225,6 @@ Use WASD to move.
         self._log.see(tk.END)
         # Lock log
         self._log.configure(state = tk.DISABLED)
-
-    # - rule_explanation()
-    # GUI to explain the rules to the player
-    #
-    # self
-    def rule_explanation(self):
-
-        pass
-
-    # - play_game()
-    # Presents the player with the GUI game
-    # 
-    # self    
-    def play_game(self):
-
-        pass
 
     # - battle()
     # Battle the player and an enemy
