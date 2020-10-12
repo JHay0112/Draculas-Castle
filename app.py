@@ -133,6 +133,10 @@ class Game:
         # Log game start
         self.log("Welcome to Dracula's Castle!")
 
+        self.log("""Tutorial:
+Use WASD to move.
+""")
+
         # Refresh the GUI
         self.gui_refresh()
 
@@ -210,7 +214,7 @@ class Game:
         # Unlock log
         self._log.configure(state = tk.NORMAL)
         # Write to log
-        self._log.insert(tk.INSERT, f"{text}\n")
+        self._log.insert(tk.INSERT, f"{text}\n\n")
         # Scroll to bottom
         self._log.see(tk.END)
         # Lock log
