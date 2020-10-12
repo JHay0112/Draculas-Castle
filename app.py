@@ -136,6 +136,8 @@ class Game:
         # Setup control buttons
         self._attack = ttk.Button(self._log_controls, text = "ATTACK", state = tk.DISABLED)
         self._attack.pack(fill = tk.X, side = tk.LEFT, expand = True)
+        self._retreat = ttk.Button(self._log_controls, text = "RETREAT", state = tk.DISABLED, command = self.retreat)
+        self._retreat.pack(fill = tk.X, side = tk.LEFT, expand = True)
 
         # Log game start
         self.log("Welcome to Dracula's Castle!")
@@ -170,6 +172,8 @@ class Game:
                     for widget in frame.winfo_children():
                         widget.destroy() # Destroy the child widget
 
+                # Store previous room
+                self._previous_room = self._current_room
                 # Update current room
                 self._current_room = self._player.room()
                 # Set room use function to add item to player invent
@@ -247,6 +251,31 @@ class Game:
         # Lock log
         self._log.configure(state = tk.DISABLED)
 
+    # - attack()
+    # Player attack enemy
+    #
+    # self
+    # enemy (characters.Enemy) - The enemy to battle with
+    def attack(self, enemy):
+
+        pass
+
+    # - retreat()
+    # Retreat from an enemy
+    #
+    # self
+    def retreat(self):
+
+        # Move the player back one room
+        self._player.change_room(self._previous_room, "m")
+        # Turn on map controls
+        self.set_control_state(True)
+        # Disable log control buttons
+        self._attack.configure(state = tk.DISABLED)
+        self._retreat.configure(state = tk.DISABLED)
+        # Refresh GUI
+        self.gui_refresh()
+
     # - battle()
     # Battle the player and an enemy
     #
@@ -254,9 +283,12 @@ class Game:
     # enemy (characters.Enemy) - The enemy the player will do battle with
     def battle(self, enemy):
 
-        # Turn off controls
+        # Turn off map controls
         self.set_control_state(False)
-
+        # Turn on log control buttons
+        self._attack.configure(state = tk.NORMAL, command = lambda e = enemy : self.attack(e))
+        self._retreat.configure(state = tk.NORMAL)
+        # Tell the user they have been attacked
         self.log(f"You are attacked by {enemy.name()}!")
 
 # - Main
