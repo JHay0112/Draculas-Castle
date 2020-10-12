@@ -52,6 +52,7 @@ class Game:
         self._parent = None # Stores tkinter parent object
         self._gui = None # Stores GUI object
         self._player = characters.Player("Player", game_map) # Initialise the player
+        self._control_state = True # Stores the state of the controls
 
         # For every item
         for item in castle_items:
@@ -102,6 +103,7 @@ class Game:
         # Setup the log frame
         self._log_frame = tk.Frame(self._gui, height = 2 * Game.COLUMN, width = 2 * Game.ROW)
         self._log_frame.grid(row = 3, column = 4, rowspan = 4, columnspan = 1)
+        # Setup text log
         self._log = scrolledtext.ScrolledText(self._log_frame,
                                               state = tk.DISABLED,
                                               width = 21,
@@ -139,9 +141,7 @@ class Game:
         self.log("Welcome to Dracula's Castle!")
 
         # Print out a tutorial in log
-        self.log("""Tutorial:
-Use WASD to move.
-""")
+        self.log("""Use WASD to move.""")
 
         # Refresh the GUI
         self.gui_refresh()
@@ -180,6 +180,13 @@ Use WASD to move.
                 # Draw new inventory
                 self._current_room.inventory().gui(self._room_invent_frame)
 
+                # Room has changed so we should check if there are any enemies
+                if(self._current_room.enemies() != []):
+                    # For every enemy
+                    for enemy in self._current_room.enemies():
+                        # BATTLE!:
+                        self.battle(enemy)
+
             # Draw player on map GUI
             self._current_room.draw_player(self._player)
 
@@ -190,25 +197,39 @@ Use WASD to move.
     # event (tkinter key event)
     def move(self, event):
 
-        # Get representation of the event
-        event = event.char
+        # Check control state
+        if(self._control_state == True):
 
-        # Interpret input
-        if(event == "w"):
-            # Move up
-            self._player.move(-1, 0)
-        elif(event == "s"):
-            # Move down
-            self._player.move(1, 0)
-        elif(event == "a"):
-            # Move left
-            self._player.move(0, 1)
-        elif(event == "d"):
-            # Move right
-            self._player.move(0, -1)
+            # Only runs if controls enabled
 
-        # Refresh the GUI
-        self.gui_refresh()
+            # Get representation of the event
+            event = event.char
+
+            # Interpret input
+            if(event == "w"):
+                # Move up
+                self._player.move(-1, 0)
+            elif(event == "s"):
+                # Move down
+                self._player.move(1, 0)
+            elif(event == "a"):
+                # Move left
+                self._player.move(0, 1)
+            elif(event == "d"):
+                # Move right
+                self._player.move(0, -1)
+
+            # Refresh the GUI
+            self.gui_refresh()
+
+    # - set_control_state()
+    # Sets the control state
+    #
+    # self
+    # new_state (bool) - The state to set the controls to
+    def set_control_state(self, new_state):
+
+        self._control_state = new_state
 
     # - log()
     # Logs an event to the text log
@@ -233,7 +254,10 @@ Use WASD to move.
     # enemy (characters.Enemy) - The enemy the player will do battle with
     def battle(self, enemy):
 
-        pass
+        # Turn off controls
+        self.set_control_state(False)
+
+        self.log(f"You are attacked by {enemy.name()}!")
 
 # - Main
 

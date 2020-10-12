@@ -43,6 +43,14 @@ class Character:
         if(type(invent_items) == list):
             self._inventory.add_items(invent_items)
 
+    # - name()
+    # Returns the name of the character
+    #
+    # self
+    def name(self):
+
+        return(self._name)
+
     # - weapon()
     # Returns the weapon object the enemy uses
     #
