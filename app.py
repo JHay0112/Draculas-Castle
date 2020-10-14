@@ -382,6 +382,7 @@ potions = [
 castle_items = weapons
 castle_items.extend(armour)
 castle_items.extend(potions)
+castle_items.append(draculas_key)
 
 # -- Enemies
 
