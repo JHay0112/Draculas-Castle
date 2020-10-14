@@ -96,8 +96,11 @@ class Character:
     def drop_inventory(self):
 
         # Get armour and weapon and put in inventory
-        self._inventory.add_item(self._weapon)
-        self._inventory.add_item(self._armour)
+        # Check that they're not none first
+        if(self._weapon != None):
+            self._inventory.add_item(self._weapon)
+        if(self._armour != None):
+            self._inventory.add_item(self._armour)
 
         # Get list of items in inventory
         invent_items = self._inventory.items()
@@ -115,6 +118,36 @@ class Character:
     def take_damage(self, damage):
 
         self._health -= damage
+
+    # - attack()
+    # Attack another character
+    #
+    # self
+    # enemy (Character) - The character to attack
+    def attack(self, enemy):
+
+        # Calculate attack damage to do
+        # Check that this character has a weapon to use
+        if(self._weapon != None):
+            # Get weapon attack damage value
+            attack_dam = self._weapon.attack_damage()
+            # Check if the enemy has armour
+            if(enemy.armour() != None):
+                # Subtract protection value from attack value
+                attack_dam -= enemy.armour().protection()
+                # Check if value is negative
+                if(attack_dam < 0):
+                    # Attack damage is negative, set to zero
+                    attack_dam = 0
+        else:
+            # No weapon, set damage to zero
+            attack_dam = 0
+
+        # Apply damage to enemy
+        enemy.take_damage(attack_dam)
+
+        # Return the attack damage
+        return(attack_dam)
 
 # - Player
 # Child of Character

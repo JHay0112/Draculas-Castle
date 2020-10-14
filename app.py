@@ -258,28 +258,13 @@ class Game:
     # enemy (characters.Enemy) - The enemy to battle with
     def attack(self, enemy):
 
-        # Calculate attack damage to do
-        # Check that the player has a weapon to use
-        if(self._player.weapon() != None):
-            # Get weapon attack damage value
-            attack_dam = self._player.weapon().attack_damage()
-            # Check if the enemy has armour
-            if(enemy.armour() != None):
-                # Subtract protection value from attack value
-                attack_dam -= enemy.armour().protection()
-                # Check if value is negative
-                if(attack_dam < 0):
-                    # Attack damage is negative, set to zero
-                    attack_dam = 0
-        else:
-            # No weapon, set damage to zero
-            attack_dam = 0
-
-        # Apply damage to enemy
-        enemy.take_damage(attack_dam)
+        # Attack the enemy
+        attack_dam = self._player.attack(enemy)
 
         # Log the attack
-        self.log(f"You did {attack_dam} damage to {enemy.name()}")
+        self.log(f"You did {attack_dam} damage to {enemy.name()}.")
+
+        # REFRESH ENEMY GUI HERE
         
         # Check if enemy is still alive
         if(enemy.is_alive() != True):
@@ -298,9 +283,27 @@ class Game:
             self._retreat.configure(state = tk.DISABLED)
         else:
             # Else the enemy attacks you
-            pass
-            
+            attack_dam = enemy.attack(self._player)
 
+            # Log the attack
+            self.log(f"{enemy.name()} did {attack_dam} damage to you!")
+
+            # REFRESH PLAYER GUI HERE
+
+            # Check if you're still alive
+            if(self._player.is_alive() != True):
+                # YOU DIED!
+                self.log(f"You were incapacitated by {enemy.name()}!")
+                # Retreat
+                self.retreat()
+                # Give the player some health back
+                self._player.take_damage(-10)
+                # Unlock controls
+                self.set_control_state(True)
+                # Lock log controls
+                self._attack.configure(state = tk.DISABLED)
+                self._retreat.configure(state = tk.DISABLED)
+                
     # - retreat()
     # Retreat from an enemy
     #
