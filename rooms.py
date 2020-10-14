@@ -109,7 +109,7 @@ class Room:
         self._gui = None # Stores GUI object associated with room
         self._map = None # Map object associated with the room, set when Map object is initialised
         self._map_key = None # Where in the grid representation of the map the room is found, set by Map object
-        self._inventory = items.Inventory() # Room inventory
+        self._inventory = items.Inventory(use_name = "PICK UP") # Room inventory
         self._player = None # The player's canvas object
         self._enemies = [] # Enemies in the room
         self._grid = [

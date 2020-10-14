@@ -171,7 +171,7 @@ class Player(Character):
         super().__init__(name, weapon = weapon, armour = armour)
 
         # Replace inventory object with one that will pass to self.use function
-        self._inventory = items.Inventory(self.use)
+        self._inventory = items.Inventory(self.use, "EQUIP")
 
     # - room()
     # Return current room

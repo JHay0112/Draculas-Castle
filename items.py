@@ -148,11 +148,13 @@ class Inventory:
     #
     # self
     # use_command (Function) - The function to run when an item is used
-    def __init__(self, use_command = None):
+    # use_name (str) - The name of the button associated with the use command
+    def __init__(self, use_command = None, use_name = "USE"):
 
         # Set inventory attributes
         self._items = [] # List of item objects stored by inventory
-        self._use_command = use_command 
+        self._use_command = use_command
+        self._use_name = use_name
         self._gui = None # Store GUI object (Frame)
         self._position = 0 # Store where in the list of items the GUI is viewing
 
@@ -210,7 +212,7 @@ class Inventory:
 
         # Use button
         self._use_button = ttk.Button(self._control_frame,
-                                      text = "USE",
+                                      text = self._use_name,
                                       state = tk.DISABLED,
                                       command = self.use,
                                       width = BUTTON_WIDTH)
