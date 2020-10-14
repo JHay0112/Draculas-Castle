@@ -59,6 +59,14 @@ class Character:
 
         return(self._weapon)
 
+    # - armour()
+    # Returns the armour object the character uses
+    #
+    # self
+    def armour(self):
+
+        return(self._armour)
+
     # - inventory()
     # Returns the inventory object of the character
     #
@@ -66,6 +74,20 @@ class Character:
     def inventory(self):
 
         return(self._inventory)
+
+    # - is_alive()
+    # Returns whether the character is still alive
+    #
+    # self
+    def is_alive(self):
+
+        # Check if health is less than or equal to 0
+        if(self._health <= 0):
+            # If so return false
+            return(False)
+        else:
+            # Else return true
+            return(True)
 
     # - drop_inventory()
     # Returns all items in player, intended for on the character's death
@@ -84,6 +106,15 @@ class Character:
         self._inventory.drop_all()
 
         return(invent_items)
+
+    # - take_damage()
+    # Applies an amount of damage to the character
+    #
+    # self
+    # damage (int) - The amount of damage to take
+    def take_damage(self, damage):
+
+        self._health -= damage
 
 # - Player
 # Child of Character

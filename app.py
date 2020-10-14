@@ -258,7 +258,48 @@ class Game:
     # enemy (characters.Enemy) - The enemy to battle with
     def attack(self, enemy):
 
-        pass
+        # Calculate attack damage to do
+        # Check that the player has a weapon to use
+        if(self._player.weapon() != None):
+            # Get weapon attack damage value
+            attack_dam = self._player.weapon().attack_damage()
+            # Check if the enemy has armour
+            if(enemy.armour() != None):
+                # Subtract protection value from attack value
+                attack_dam -= enemy.armour().protection()
+                # Check if value is negative
+                if(attack_dam < 0):
+                    # Attack damage is negative, set to zero
+                    attack_dam = 0
+        else:
+            # No weapon, set damage to zero
+            attack_dam = 0
+
+        # Apply damage to enemy
+        enemy.take_damage(attack_dam)
+
+        # Log the attack
+        self.log(f"You did {attack_dam} damage to {enemy.name()}")
+        
+        # Check if enemy is still alive
+        if(enemy.is_alive() != True):
+            # Enemy is dead and you have killed them
+            self.log(f"{enemy.name()} is dead and you have killed them.")
+            # Drop their inventory into the room
+            self._current_room.inventory().add_items(enemy.drop_inventory())
+            # Refresh the GUI
+            self.gui_refresh()
+            # Remove enemy from room
+            self._current_room.enemies().remove(enemy)
+            # Unlock controls
+            self.set_control_state(True)
+            # Lock log controls
+            self._attack.configure(state = tk.DISABLED)
+            self._retreat.configure(state = tk.DISABLED)
+        else:
+            # Else the enemy attacks you
+            pass
+            
 
     # - retreat()
     # Retreat from an enemy
