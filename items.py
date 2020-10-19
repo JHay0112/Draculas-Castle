@@ -45,6 +45,15 @@ class Item:
     def useable(self):
         return(self._useable)
 
+    # - set_useable()
+    # Sets the usability of an item
+    #
+    # self
+    # state (bool) - The state to set the flag to
+    def set_useable(self, state):
+
+        self._useable = state
+
 # Weapon class, child of Item
 class Weapon(Item):
 
