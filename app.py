@@ -285,7 +285,7 @@ class Game:
             self._attack.configure(state = tk.DISABLED)
             self._retreat.configure(state = tk.DISABLED)
             # Remove enemy GUI
-            for widget in self._enemy_stat_frame.winfochildren():
+            for widget in self._enemy_stat_frame.winfo_children():
                 widget.destroy()
         else:
             # Else the enemy attacks you
@@ -325,6 +325,9 @@ class Game:
         self._retreat.configure(state = tk.DISABLED)
         # Refresh GUI
         self.gui_refresh()
+        # Remove enemy GUI
+        for widget in self._enemy_stat_frame.winfo_children():
+            widget.destroy()
 
     # - battle()
     # Battle the player and an enemy
