@@ -193,10 +193,8 @@ class Game:
 
                 # Room has changed so we should check if there are any enemies
                 if(self._current_room.enemies() != []):
-                    # For every enemy
-                    for enemy in self._current_room.enemies():
-                        # BATTLE!:
-                        self.battle(enemy)
+                    # BATTLE! (first enemy only):
+                    self.battle(enemy[0])
 
             # Draw player on map GUI
             self._current_room.draw_player(self._player)
