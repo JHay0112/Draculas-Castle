@@ -281,6 +281,9 @@ class Player(Character):
             # If the item is a potion
             # Add the health effect to our health
             self._health += item.health_effect()
+        elif(type(item) == items.Key):
+            # If the item is a key, use it
+            item.use()
 
         # Refresh GUI if applicable
         self.gui_refresh()

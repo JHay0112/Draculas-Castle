@@ -55,6 +55,9 @@ class Game:
         self._player = characters.Player("Player", game_map) # Initialise the player
         self._control_state = True # Stores the state of the controls
 
+        # Set boss room key callback
+        self._boss_room_key.set_callback(self.unlock_boss_room)
+
         # Add boss room key to items
         castle_items.append(self._boss_room_key)
 
@@ -346,6 +349,14 @@ class Game:
 
         # Initiate enemy gui
         enemy.gui(self._enemy_stat_frame)
+
+    # - unlock_boss_room()
+    # Unlocks the boss room
+    #
+    # self
+    def unlock_boss_room(self):
+
+        pass
 
 # - Main
 

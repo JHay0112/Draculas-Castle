@@ -144,10 +144,33 @@ class Key(Item):
     #
     # self
     # name (str) - The name of the key
-    def __init__(self, name):
+    # callback (function) - The function to call when the key is used
+    def __init__(self, name, callback = None):
+
+        # Store callback function
+        self._callback = callback
 
         # Set attributes associated with parent item
-        super().__init__(name)
+        super().__init__(name, True)
+
+    # - use()
+    # use the key
+    #
+    # self
+    def use(self):
+
+        # Check if callback exists first
+        if(self._callback != None):
+            self._callback()
+
+    # - set_callback()
+    # Set the callback function
+    #
+    # self
+    # callback (function) - The function call on use
+    def set_callback(self, callback)
+
+        self._callback = callback
 
 # Inventory class, used for item management
 class Inventory:
