@@ -282,6 +282,9 @@ class Player(Character):
             # Add the health effect to our health
             self._health += item.health_effect()
 
+        # Refresh GUI if applicable
+        self.gui_refresh()
+
     # - move()
     # Move the player by an amount x/y in the room
     #
