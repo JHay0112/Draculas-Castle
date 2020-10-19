@@ -202,6 +202,24 @@ class Game:
             # Draw player on map GUI
             self._current_room.draw_player(self._player)
 
+    # - give_player_item()
+    # Give the player an item
+    #
+    # self
+    # item (items.Item) - The item to add
+    def give_player_item(self, item):
+
+        # Check if it's a key
+        if(type(item) == items.Key):
+            # Players cannot "use" keys
+            # Disable useability
+            item.set_useable(False)
+            # Run key callback
+            item.use()
+
+        # Add to inventory
+        self._player.inventory().add_item(item)
+
     # - move()
     # Move the player as specified by key
     #
@@ -441,6 +459,7 @@ toilet = rooms.Room("Toilet", s = True)
 cellar = rooms.Room("Cellar", n = True, w = toilet)
 entrance_hall = rooms.Room("Entrance Hall", n = True)
 crypt = rooms.Room("THE CRYPT", key = draculas_key)
+crypt.add_enemy(dracula) # Add dracula to the crypt
 
 # Create Map of rooms
 castle_map = rooms.Map([
@@ -462,7 +481,7 @@ castle_map = rooms.Map([
         rooms.Room("West Tower", n = True, s = True, e = True),
         rooms.Room("West Hallway", n = True, e = True, w = True),
         rooms.Room("Main Hall", n = True, s = True, e = True, w = True),
-        rooms.Room("Corridor", s = True, w = True),
+        rooms.Room("Corridor", s = True, w = True, n = crypt),
         cellar
     ],
     [

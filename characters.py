@@ -349,7 +349,7 @@ class Player(Character):
         locked = True
 
         # Check if room is locked
-        if(type(self._room.key()) == items.Key):
+        if(self._room.key() != None):
             # If room is locked check the player inventory for the relevant key
             if(self._room.key() in self._inventory.items()):
                 # If the player has the key then unlock the room
@@ -359,7 +359,7 @@ class Player(Character):
             # Room is not locked, so set it as not locked
             locked = False
 
-        if(not locked):
+        if(locked != True):
             # Set current room to new room
             new_position = room.find_entrance(entrance)
             # Make sure the new room and entrance really exist first
