@@ -249,7 +249,7 @@ class Game:
         # Unlock log
         self._log.configure(state = tk.NORMAL)
         # Write to log
-        self._log.insert(tk.INSERT, f"{text}\n\n")
+        self._log.insert(tk.END, f"{text}\n\n")
         # Scroll to bottom
         self._log.see(tk.END)
         # Lock log
