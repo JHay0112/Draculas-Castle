@@ -274,7 +274,7 @@ class Player(Character):
             # Check if armour is equipped by the player
             if(self._armour != None):
                 # If it is then add it to the inventory
-                self._inventory.add_item(self._weapon)
+                self._inventory.add_item(self._armour)
             # Equip the new piece of armour
             self._armour = item
         elif(type(item) == items.Potion):
