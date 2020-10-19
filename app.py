@@ -356,7 +356,7 @@ class Game:
     # self
     def unlock_boss_room(self):
 
-        pass
+        self.log("THE CRYPT HAS BEEN UNLOCKED!")
 
 # - Main
 

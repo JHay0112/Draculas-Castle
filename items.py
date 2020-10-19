@@ -168,7 +168,7 @@ class Key(Item):
     #
     # self
     # callback (function) - The function call on use
-    def set_callback(self, callback)
+    def set_callback(self, callback):
 
         self._callback = callback
 
