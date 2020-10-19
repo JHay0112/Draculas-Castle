@@ -187,7 +187,7 @@ class Game:
                 # Update current room
                 self._current_room = self._player.room()
                 # Set room use function to add item to player invent
-                self._current_room.inventory().set_use_command(self._player.inventory().add_item)
+                self._current_room.inventory().set_use_command(self.give_player_item)
 
                 # Draw new map
                 self._current_room.gui(self._map_frame)
