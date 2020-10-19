@@ -137,6 +137,9 @@ class Game:
         # Setup room inventory
         self._current_room.inventory().gui(self._room_invent_frame)
 
+        # Setup player stat frame
+        self._player.gui(self._player_stat_frame)
+
         # Setup control buttons
         self._attack = ttk.Button(self._log_controls, text = "ATTACK", state = tk.DISABLED)
         self._attack.pack(fill = tk.X, side = tk.LEFT, expand = True)
@@ -267,8 +270,6 @@ class Game:
 
         # Log the attack
         self.log(f"You did {attack_dam} damage to {enemy.name()}.")
-
-        # REFRESH ENEMY GUI HERE
         
         # Check if enemy is still alive
         if(enemy.is_alive() != True):
@@ -285,14 +286,15 @@ class Game:
             # Lock log controls
             self._attack.configure(state = tk.DISABLED)
             self._retreat.configure(state = tk.DISABLED)
+            # Remove enemy GUI
+            for widget in self._enemy_stat_frame.winfochildren():
+                widget.destroy()
         else:
             # Else the enemy attacks you
             attack_dam = enemy.attack(self._player)
 
             # Log the attack
             self.log(f"{enemy.name()} did {attack_dam} damage to you!")
-
-            # REFRESH PLAYER GUI HERE
 
             # Check if you're still alive
             if(self._player.is_alive() != True):
@@ -340,6 +342,9 @@ class Game:
         self._retreat.configure(state = tk.NORMAL)
         # Tell the user they have been attacked
         self.log(f"You are attacked by {enemy.name()}!")
+
+        # Initiate enemy gui
+        enemy.gui(self._enemy_stat_frame)
 
 # - Main
 

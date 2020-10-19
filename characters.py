@@ -38,6 +38,7 @@ class Character:
         self._weapon = weapon
         self._armour = armour
         self._health = health
+        self._gui = None
 
         # Add items to inventory
         if(type(invent_items) == list):
@@ -119,6 +120,9 @@ class Character:
 
         self._health -= damage
 
+        # Refresh GUI if applicable
+        self.gui_refresh()
+
     # - attack()
     # Attack another character
     #
@@ -146,8 +150,59 @@ class Character:
         # Apply damage to enemy
         enemy.take_damage(attack_dam)
 
+        # Refresh GUI if applicable
+        self.gui_refresh()
+
         # Return the attack damage
         return(attack_dam)
+
+    # - gui()
+    # Creates a gui object associated with the character
+    #
+    # self
+    # parent (tkinter) - The parent tkinter object
+    def gui(self, parent):
+        
+        # Create parent GUI object
+        self._gui = tk.Frame(parent)
+        self._gui.pack(fill = tk.X)
+
+        # Set character name label
+        tk.Label(self._gui, text = self._name, anchor = tk.W).pack(fill = tk.X)
+
+        # Setup health, weapon, and armour label
+        self._health_label = tk.Label(self._gui, anchor = tk.W)
+        self._weapon_label = tk.Label(self._gui, anchor = tk.W)
+        self._armour_label = tk.Label(self._gui, anchor = tk.W)
+        # Pack them
+        self._health_label.pack(fill = tk.X)
+        self._weapon_label.pack(fill = tk.X)
+        self._armour_label.pack(fill = tk.X)
+
+        # Refresh GUI
+        self.gui_refresh()
+        
+    # - gui_refresh()
+    # Update text variable with new values
+    #
+    # self
+    def gui_refresh(self):
+
+        # Check for gui
+        if(self._gui != None):
+
+            # Set labels
+            self._health_label.config(text = f"Health: {self._health}")
+            # Check if weapon exists
+            if(self._weapon != None):
+                self._weapon_label.config(text = f"Weapon: {self._weapon.name()}")
+            else:
+                self._weapon_label.config(text = "Weapon: None")
+            # Check if armour exists
+            if(self._armour != None):
+                self._armour_label.config(text = f"Armour: {self._armour.name()}")
+            else:
+                self._armour_label.config(text = "Armour: None")
 
 # - Player
 # Child of Character
@@ -337,7 +392,10 @@ if(__name__ == "__main__"):
         ])
 
     # Display player inventory
-    player.inventory().gui(root)
+    #player.inventory().gui(root)
+
+    # Display player stats
+    player.gui(root)
 
     # Root mainloop
     root.mainloop()
