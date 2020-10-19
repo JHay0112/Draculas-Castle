@@ -49,10 +49,14 @@ class Game:
 
         # Set attributes
         self._map = game_map
+        self._boss_room_key = boss_room_key # Store key of boss room
         self._parent = None # Stores tkinter parent object
         self._gui = None # Stores GUI object
         self._player = characters.Player("Player", game_map) # Initialise the player
         self._control_state = True # Stores the state of the controls
+
+        # Add boss room key to items
+        castle_items.append(self._boss_room_key)
 
         # For every item
         for item in castle_items:
@@ -382,7 +386,6 @@ potions = [
 castle_items = weapons
 castle_items.extend(armour)
 castle_items.extend(potions)
-castle_items.append(draculas_key)
 
 # -- Enemies
 
