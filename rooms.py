@@ -101,10 +101,12 @@ class Room:
         # Set Room attributes
         self._name = name # Name of the room
         # Defining what entrances are there
-        self._n = n
-        self._s = s
-        self._e = e 
-        self._w = w 
+        self._entrances = {
+                "n": n,
+                "s": s,
+                "e": e,
+                "w": w
+            }
         self._key = key # If the room requires a key
         self._gui = None # Stores GUI object associated with room
         self._map = None # Map object associated with the room, set when Map object is initialised
@@ -112,36 +114,64 @@ class Room:
         self._inventory = items.Inventory(use_name = "PICK UP") # Room inventory
         self._player = None # The player's canvas object
         self._enemies = [] # Enemies in the room
-        self._grid = [
-                [0, 0, self._n, "n", self._n, 0, 0],
-                [0, 1, 1, not self._n, 1, 1, 0],
-                [self._w, 1, 0, 0, 0, 1, self._e],
-                ["w", not self._w, 0, "m", 0, not self._e, "e"],
-                [self._w, 1, 0, 0, 0, 1, self._e],
-                [0, 1, 1, not self._s, 1, 1, 0,],
-                [0, 0, self._s, "s", self._s, 0, 0]
-            ] # Grid represenation of this specific room with entrances added
+        self._grid = [] # Grid represenation of this specific room with entrances added
 
-        # Check the entrances
-        self.check_entrance(self._n, "n")
-        self.check_entrance(self._s, "s")
-        self.check_entrance(self._e, "e")
-        self.check_entrance(self._w, "w")
+        self.check_entrances()
 
-    # - check_entrance
+    # - check_entrances()
     # Checks if entrances are linked to specific rooms
     #
     # self
-    # entrance_var (bool/Room) - The entrance variable to check
-    # entrance_name (str) - The name of the entrance in the grid
-    def check_entrance(self, entrance_var, entrance_name):
+    def check_entrances(self):
 
-        # If a room object is stored in the entrance_var
-        if(type(entrance_var) == Room):
-            # Find the entrance key
-            map_key = self.find_entrance(entrance_name)
-            # Insert the object into the map
-            self._grid[map_key[0]][map_key[1]] = entrance_var
+        # Refresh grid
+        self.grid_refresh()
+
+        for entrance_name, entrance_value in self._entrances.items():
+            # If a room object is stored in the entrance_var
+            if(type(entrance_value) == Room):
+                # Find the entrance key
+                map_key = self.find_entrance(entrance_name)
+                # Insert the object into the map
+                self._grid[map_key[0]][map_key[1]] = entrance_value
+
+    # - grid_refresh()
+    # Refresh the grid
+    #
+    # self
+    def grid_refresh(self):
+
+        # Compute grid
+        self._grid = [
+                [0, 0, self._entrances["n"], "n", self._entrances["n"], 0, 0],
+                [0, 1, 1, not self._entrances["n"], 1, 1, 0],
+                [self._entrances["w"], 1, 0, 0, 0, 1, self._entrances["e"]],
+                ["w", not self._entrances["w"], 0, "m", 0, not self._entrances["e"], "e"],
+                [self._entrances["w"], 1, 0, 0, 0, 1, self._entrances["e"]],
+                [0, 1, 1, not self._entrances["s"], 1, 1, 0,],
+                [0, 0, self._entrances["s"], "s", self._entrances["s"], 0, 0]
+            ] # Grid represenation of this specific room with entrances added
+
+    # - add_entrance()
+    # Changes an entrance value
+    #
+    # self
+    # entrance_name (str) - The name of the entrance to modify
+    # new_val (bool/Room) - The new value to insert
+    def add_entrance(self, entrance_name, new_val):
+
+        # Set the new value
+        self._entrances[entrance_name] = new_val
+        # Check all entrances
+        self.check_entrances()
+
+    # - entrances()
+    # Returns dict of entrances
+    #
+    # self
+    def entrances(self):
+
+        return(self._entrances)
 
     # - key()
     # Returns the key value

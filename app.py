@@ -481,7 +481,7 @@ castle_map = rooms.Map([
         rooms.Room("West Tower", n = True, s = True, e = True),
         rooms.Room("West Hallway", n = True, e = True, w = True),
         rooms.Room("Main Hall", n = True, s = True, e = True, w = True),
-        rooms.Room("Corridor", s = True, w = True, n = crypt),
+        rooms.Room("Corridor", s = True, w = True),
         cellar
     ],
     [
@@ -503,6 +503,8 @@ if __name__ == "__main__":
     # Game setup
     game = Game(castle_map, draculas_key, castle_enemies, castle_items) # Create game object
     game.gui(root, 600, 600)
+
+    cellar.add_entrance("e", crypt)
 
     # Tkinter mainloop
     root.mainloop()
