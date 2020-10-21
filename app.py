@@ -453,9 +453,9 @@ dracula = characters.Enemy("COUNT DRACULA",
 # Other enemies that can be found in the castle
 castle_enemies = [
         characters.Enemy("The Goose",
-                         50,
-                         items.Weapon("HONK", 15, 20),
-                         items.Armour("Goose Feathers", 10)),
+                         40,
+                         items.Weapon("HONK", 10, 15),
+                         items.Armour("Goose Feathers", 8)),
         characters.Enemy("Thousands of Bees",
                          100,
                          items.Weapon("Sting", 1, 3),
