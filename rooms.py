@@ -95,8 +95,7 @@ class Room:
     # self
     # name (str) - Name of the room
     # n, s, e, w (bool/Room) - Stores
-    # key (str) - The name of the key the room requires to unlock, default None
-    def __init__(self, name, n = False, s = False, e = False, w = False, key = None):
+    def __init__(self, name, n = False, s = False, e = False, w = False):
 
         # Set Room attributes
         self._name = name # Name of the room
@@ -107,7 +106,6 @@ class Room:
                 "e": e,
                 "w": w
             }
-        self._key = key # If the room requires a key
         self._gui = None # Stores GUI object associated with room
         self._map = None # Map object associated with the room, set when Map object is initialised
         self._map_key = None # Where in the grid representation of the map the room is found, set by Map object
@@ -172,14 +170,6 @@ class Room:
     def entrances(self):
 
         return(self._entrances)
-
-    # - key()
-    # Returns the key value
-    #
-    # self
-    def key(self):
-        
-        return(self._key)
 
     # - grid()
     # Returns the room's grid

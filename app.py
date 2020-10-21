@@ -478,7 +478,7 @@ castle_enemies = [
 toilet = rooms.Room("Toilet", s = True)
 cellar = rooms.Room("Cellar", n = True, w = toilet)
 entrance_hall = rooms.Room("Entrance Hall", n = True)
-crypt = rooms.Room("THE CRYPT", key = draculas_key)
+crypt = rooms.Room("THE CRYPT")
 crypt.add_enemy(dracula) # Add dracula to the crypt
 
 # Create Map of rooms
