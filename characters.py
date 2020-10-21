@@ -349,7 +349,7 @@ class Player(Character):
         locked = True
 
         # Check if room is locked
-        if(self._room.key() != None):
+        if(room.key() != None):
             # If room is locked check the player inventory for the relevant key
             if(self._room.key() in self._inventory.items()):
                 # If the player has the key then unlock the room
