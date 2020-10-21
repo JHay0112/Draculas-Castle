@@ -281,6 +281,9 @@ class Player(Character):
             # If the item is a potion
             # Add the health effect to our health
             self._health += item.health_effect()
+        elif(type(item) == items.Key):
+            # If the item is a key, use it
+            item.use()
 
         # Refresh GUI if applicable
         self.gui_refresh()
@@ -341,28 +344,13 @@ class Player(Character):
     # room (rooms.Room): The room the player is to move to
     # entrance (str): The name of the entrance the player will appear in e.g. "n"
     def change_room(self, room, entrance):
-
-        # Flag for if room is locked
-        locked = True
-
-        # Check if room is locked
-        if(type(self._room.key()) == items.Key):
-            # If room is locked check the player inventory for the relevant key
-            if(self._room.key() in self._inventory.items()):
-                # If the player has the key then unlock the room
-                locked = False
-            # Else rooms stays locked, nothing changes
-        else:
-            # Room is not locked, so set it as not locked
-            locked = False
-
-        if(not locked):
-            # Set current room to new room
-            new_position = room.find_entrance(entrance)
-            # Make sure the new room and entrance really exist first
-            if(new_position != False):
-                self._room = room
-                self._position = new_position
+        
+        # Set current room to new room
+        new_position = room.find_entrance(entrance)
+        # Make sure the new room and entrance really exist first
+        if(new_position != False):
+            self._room = room
+            self._position = new_position
             
 # - Enemy
 # Child of Character

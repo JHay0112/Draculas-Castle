@@ -55,6 +55,9 @@ class Game:
         self._player = characters.Player("Player", game_map) # Initialise the player
         self._control_state = True # Stores the state of the controls
 
+        # Set boss room key callback
+        self._boss_room_key.set_callback(self.unlock_boss_room)
+
         # Add boss room key to items
         castle_items.append(self._boss_room_key)
 
@@ -184,7 +187,7 @@ class Game:
                 # Update current room
                 self._current_room = self._player.room()
                 # Set room use function to add item to player invent
-                self._current_room.inventory().set_use_command(self._player.inventory().add_item)
+                self._current_room.inventory().set_use_command(self.give_player_item)
 
                 # Draw new map
                 self._current_room.gui(self._map_frame)
@@ -198,6 +201,24 @@ class Game:
 
             # Draw player on map GUI
             self._current_room.draw_player(self._player)
+
+    # - give_player_item()
+    # Give the player an item
+    #
+    # self
+    # item (items.Item) - The item to add
+    def give_player_item(self, item):
+
+        # Check if it's a key
+        if(type(item) == items.Key):
+            # Players cannot "use" keys
+            # Disable useability
+            item.set_useable(False)
+            # Run key callback
+            item.use()
+
+        # Add to inventory
+        self._player.inventory().add_item(item)
 
     # - move()
     # Move the player as specified by key
@@ -347,6 +368,34 @@ class Game:
         # Initiate enemy gui
         enemy.gui(self._enemy_stat_frame)
 
+    # - unlock_boss_room()
+    # Unlocks the boss room
+    #
+    # self
+    def unlock_boss_room(self):
+
+        # Flag for if an entrance has been added
+        entrance_added = False
+
+        self.log("THE CRYPT HAS BEEN UNLOCKED!")
+
+        # Add entrance to the crypt to a random room
+        while(entrance_added != True):
+
+            # Pick a random room from the set of rooms
+            row = random.choice(self._map.grid())
+            room = random.choice(row)
+
+            # Check if there are any free entrances
+            for entrance_name, entrance_val in room.entrances().items():
+                # Entrance value will be false if no entrance exists there
+                if(entrance_val == False):
+                    # Add the entrance
+                    room.add_entrance(entrance_name, self._map.boss_room())
+                    # Set flag true to exit loop
+                    entrance_added = True
+                    break # Break for loop
+
 # - Main
 
 root = tk.Tk() # Tkinter root object
@@ -404,9 +453,9 @@ dracula = characters.Enemy("COUNT DRACULA",
 # Other enemies that can be found in the castle
 castle_enemies = [
         characters.Enemy("The Goose",
-                         50,
-                         items.Weapon("HONK", 15, 20),
-                         items.Armour("Goose Feathers", 10)),
+                         40,
+                         items.Weapon("HONK", 10, 15),
+                         items.Armour("Goose Feathers", 8)),
         characters.Enemy("Thousands of Bees",
                          100,
                          items.Weapon("Sting", 1, 3),
@@ -429,7 +478,8 @@ castle_enemies = [
 toilet = rooms.Room("Toilet", s = True)
 cellar = rooms.Room("Cellar", n = True, w = toilet)
 entrance_hall = rooms.Room("Entrance Hall", n = True)
-crypt = rooms.Room("THE CRYPT", key = draculas_key)
+crypt = rooms.Room("THE CRYPT")
+crypt.add_enemy(dracula) # Add dracula to the crypt
 
 # Create Map of rooms
 castle_map = rooms.Map([
