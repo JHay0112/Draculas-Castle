@@ -374,7 +374,27 @@ class Game:
     # self
     def unlock_boss_room(self):
 
+        # Flag for if an entrance has been added
+        entrance_added = False
+
         self.log("THE CRYPT HAS BEEN UNLOCKED!")
+
+        # Add entrance to the crypt to a random room
+        while(entrance_added != True):
+
+            # Pick a random room from the set of rooms
+            row = random.choice(self._map.grid())
+            room = random.choice(row)
+
+            # Check if there are any free entrances
+            for entrance_name, entrance_val in room.entrances().items():
+                # Entrance value will be false if no entrance exists there
+                if(entrance_val == False):
+                    # Add the entrance
+                    room.add_entrance(entrance_name, self._map.boss_room())
+                    # Set flag true to exit loop
+                    entrance_added = True
+                    break # Break for loop
 
 # - Main
 
@@ -503,8 +523,6 @@ if __name__ == "__main__":
     # Game setup
     game = Game(castle_map, draculas_key, castle_enemies, castle_items) # Create game object
     game.gui(root, 600, 600)
-
-    cellar.add_entrance("e", crypt)
 
     # Tkinter mainloop
     root.mainloop()
