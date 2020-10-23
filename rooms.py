@@ -328,7 +328,7 @@ class Room:
             for column in row:
 
                 # If the column is non-zero and non-string
-                if((column != 0) and (type(column) != str)):
+                if((column != 0) and (type(column) != str) and (type(column) != Room)):
 
                     # Calculate coordinates
                     x0 = column_num * grid_width
