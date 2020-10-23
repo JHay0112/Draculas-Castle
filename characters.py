@@ -120,6 +120,10 @@ class Character:
 
         self._health -= damage
 
+        # If health is less than zero, set to zero
+        if(self._health < 0):
+            self._health = 0
+
         # Refresh GUI if applicable
         self.gui_refresh()
 
