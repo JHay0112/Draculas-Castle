@@ -414,7 +414,8 @@ weapons = [
         items.Weapon("Crowbar", 3, 8),
         items.Weapon("Steaming Vat of Molten Cheese", 5, 9),
         items.Weapon("Nokia 3310 Boomerang", 10, 15),
-        items.Weapon("Laser Jet Printer", 12, 18)
+        items.Weapon("Laser Jet Printer", 12, 18),
+        items.Weapon("Red Syringe", 10, 25)
     ]
 
 # --- Armour
@@ -431,9 +432,10 @@ armour = [
 
 potions = [
         items.Potion("Water", 5),
-        items.Potion("Bathwater?", -5),
         items.Potion("Fresh Mountain Water", 20),
-        items.Potion("Hot Chocolate", 10)
+        items.Potion("Hot Chocolate", 10),
+        items.Potion("Dessicated Sustenance Bar", 30),
+        items.Potion("Green Syringe", 50)
     ]
 
 # --- Collection of all items
@@ -446,9 +448,9 @@ castle_items.extend(potions)
 
 # Dracula
 dracula = characters.Enemy("COUNT DRACULA",
-                           1000,
-                           items.Weapon("DRACULA'S STAFF", 50, 100),
-                           items.Armour("DRACULA'S SHIELD", 100))
+                           200,
+                           items.Weapon("DRACULA'S STAFF", 30, 50),
+                           items.Armour("DRACULA'S SHIELD", 50))
 
 # Other enemies that can be found in the castle
 castle_enemies = [
@@ -469,7 +471,21 @@ castle_enemies = [
                          [items.Potion("Homebrew", 10)]),
         characters.Enemy("SyntaxError",
                          5,
-                         items.Weapon("Inconvenience", 1, 10))
+                         items.Weapon("Inconvenience", 1, 10)),
+        characters.Enemy("The Beekeeper",
+                         20,
+                         items.Weapon("Smoker", 1, 15),
+                         items.Armour("Beekeeping Suit", 3),
+                         [items.Potion("Honeycomb", 30), items.Weapon("Pry Tool", 5, 20)]),
+        characters.Enemy("Larry",
+                         15,
+                         items.Weapon("Relationship Advice", -10, 10),
+                         None),
+        characters.Enemy("Imaginos",
+                         30,
+                         items.Weapon("Staff of the Ether", 10, 20),
+                         None,
+                         [items.Potion("Ether", 50)])
     ]
 
 # -- Map/Rooms
