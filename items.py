@@ -207,7 +207,7 @@ class Inventory:
     def gui(self, parent):
 
         # Button width, spent some time weaking this so figured it was best a constant
-        BUTTON_WIDTH = 7
+        BUTTON_WIDTH = 10
 
         # Create frame to hold items and pack it
         self._gui = tk.Frame(parent, height = 100, width = 200)
@@ -251,11 +251,11 @@ class Inventory:
         self._use_button.pack(side = tk.LEFT, expand = True)
 
         # Discard button
-        self._drop_button = ttk.Button(self._control_frame,
+        '''self._drop_button = ttk.Button(self._control_frame,
                                        text = "DROP",
                                        state = tk.DISABLED,
                                        width = BUTTON_WIDTH)
-        self._drop_button.pack(side = tk.LEFT, expand = True)
+        self._drop_button.pack(side = tk.LEFT, expand = True)'''
 
         # Refresh the GUI
         self.gui_refresh()
@@ -310,8 +310,8 @@ class Inventory:
         # Check the item exists
         if(item is not None):
             # If it exists we can discard it
-            self._drop_button.config(state = tk.ACTIVE)
-            self._drop_button.config(command = lambda i = item: self.drop_item(i))
+            '''self._drop_button.config(state = tk.ACTIVE)
+            self._drop_button.config(command = lambda i = item: self.drop_item(i))'''
 
             # If the current position is zero then disable the up button
             if(self._position == 0):
@@ -333,7 +333,7 @@ class Inventory:
                 self._use_button.config(state = tk.ACTIVE)
         else:
             # Item does not exist we cannot do anything with it, and the inventory must be empty
-            self._drop_button.config(state = tk.DISABLED)
+            '''self._drop_button.config(state = tk.DISABLED)'''
             self._up_button.config(state = tk.DISABLED)
             self._down_button.config(state = tk.DISABLED)
             self._use_button.config(state = tk.DISABLED)
