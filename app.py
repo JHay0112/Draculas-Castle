@@ -16,6 +16,7 @@
 import tkinter as tk # GUI
 from tkinter import ttk # Refined GUI elements
 from tkinter import scrolledtext # Scrolled text element
+from tkinter import messagebox # Message boxes for errors
 import random # Generate random values
 
 # -- Components
@@ -234,19 +235,36 @@ class Game:
     #
     # self
     def update_player(self):
+            
+        # Flag for errors
+        error = False
 
         # Get inputs
-        name = self._player_name.get()
-        age = self._player_age.get()
+        name = self._player_name.get() # Get name, should always run without error
+        # Try and get age, if non-int with throw exception
+        try:
+            age = int(self._player_age.get())
+        except:
+            # Age is not int, alert user!
+            messagebox.showerror("ERROR", "Age must be an integer (whole number e.g. 3)!")
+            error = True
 
-        # Send values to player object
-        self._player.set_name(name)
-        self._player.set_age(age)
+        # Check that age is above zero
+        if(age <= 0):
+            # Age is invalid
+            messagebox.showerror("ERROR", "Age must be above zero (e.g. 3)!")
+            error = True
+            
+        # Only run these if there are no errors
+        if(not error):
+            # Send values to player object
+            self._player.set_name(name)
+            self._player.set_age(age)
 
-        # Close player creation dialogue
-        self._player_info_window.destroy()
-        # Make sure parent is focused
-        self._parent.focus_force()
+            # Close player creation dialogue
+            self._player_info_window.destroy()
+            # Make sure parent is focused
+            self._parent.focus_force()
 
     # - give_player_item()
     # Give the player an item

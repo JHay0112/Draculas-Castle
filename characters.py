@@ -206,10 +206,8 @@ class Character:
         self._gui.pack(fill = tk.X)
 
         # Character vars
-        self._name_label = tk.Label(self._gui, text = self._name, anchor = tk.W)
+        self._name_label = tk.Label(self._gui, text = f"{self._name} ({self._age})", anchor = tk.W)
         self._name_label.pack(fill = tk.X)
-        self._age_label = tk.Label(self._gui, text = self._age, anchor = tk.W)
-        self._age_label.pack(fill = tk.X)
 
         # Setup health, weapon, and armour label
         self._health_label = tk.Label(self._gui, anchor = tk.W)
@@ -245,8 +243,7 @@ class Character:
             else:
                 self._armour_label.config(text = "Armour: None")
 
-            self._name_label.config(text = self._name)
-            self._age_label.config(text = self._age)
+            self._name_label.config(text = f"{self._name} ({self._age})")
 
 # - Player
 # Child of Character
