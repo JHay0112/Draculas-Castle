@@ -50,7 +50,11 @@ class Character:
     # self
     def name(self):
 
-        return(self._name)
+        # Check if the name is a tk string var
+        if(type(self._name) == tk.StringVar):
+            return(self._name.get())
+        else:
+            return(self._name)
 
     # - weapon()
     # Returns the weapon object the enemy uses
@@ -172,7 +176,11 @@ class Character:
         self._gui.pack(fill = tk.X)
 
         # Set character name label
-        tk.Label(self._gui, text = self._name, anchor = tk.W).pack(fill = tk.X)
+        # Check if it is string var
+        if(type(self._name) == tk.StringVar):
+            tk.Label(self._gui, textvariable = self._name, anchor = tk.W).pack(fill = tk.X)
+        else:
+            tk.Label(self._gui, text = self._name, anchor = tk.W).pack(fill = tk.X)
 
         # Setup health, weapon, and armour label
         self._health_label = tk.Label(self._gui, anchor = tk.W)
@@ -377,14 +385,21 @@ if(__name__ == "__main__"):
     # Initialise a map
     game_map = rooms.Map([[start_room], [end_room]], start_room, end_room)
 
+    # String var name
+    name = tk.StringVar()
+    name.set("Jordan Hay")
+
     # Create player object
-    player = Player("Jordan Hay", game_map)
+    player = Player(name, game_map)
     player.inventory().add_items([
             items.Item("Bees"),
             items.Weapon("A HIVE FULL OF BEES", 10, 300),
             items.Armour("Honeycomb Kneepads", 100),
             items.Potion("10mL Syringe full of Honey", 10)
         ])
+
+    # After ten seconds the name will change
+    root.after(10000, lambda: name.set("Different name"))
 
     # Display player inventory
     #player.inventory().gui(root)
