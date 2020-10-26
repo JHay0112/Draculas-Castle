@@ -163,9 +163,9 @@ class Game:
 
         # Get player info
         # Setup window
-        self._player_info_window = tk.Toplevel(self._parent)
+        self._player_info_window = tk.Toplevel(self._parent, padx = 10, pady = 10)
         self._player_info_window.title("Character Creation")
-        self._player_info_window.geometry("200x125+700+100")
+        self._player_info_window.geometry("200x150+710+100")
         # Setup widgets
         # Set title
         tk.Label(self._player_info_window, text = "Character Creation", anchor = tk.W).pack(fill = tk.X)
@@ -178,7 +178,7 @@ class Game:
         # Age input
         tk.Entry(self._player_info_window, textvariable = self._player_age).pack(fill = tk.X)
         # Set button
-        ttk.Button(self._player_info_window, text = "Set Values", command = self.update_player).pack(fill = tk.X)
+        ttk.Button(self._player_info_window, text = "Set Values", command = self.update_player).pack(fill = tk.X, pady = (5, 0))
         # Focus
         self._player_info_window.focus_force()
 
