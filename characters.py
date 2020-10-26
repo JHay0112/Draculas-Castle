@@ -26,14 +26,16 @@ class Character:
     #
     # self
     # name (str) - The name of the character
+    # age (int) - The age of the character
     # health (int) - The health of the character
     # weapon (items.Weapon) - The weapon the character uses
     # armour (items.Armour) - The armour the character uses
     # items (list) - List of items to add to the character's inventory
-    def __init__(self, name, health = 100, weapon = None, armour = None, invent_items = None):
+    def __init__(self, name, age = 18, health = 100, weapon = None, armour = None, invent_items = None):
 
         # Set attributes
         self._name = name
+        self._age = age
         self._inventory = items.Inventory() 
         self._weapon = weapon
         self._armour = armour
@@ -49,12 +51,40 @@ class Character:
     #
     # self
     def name(self):
+        
+        return(self._name)
 
-        # Check if the name is a tk string var
-        if(type(self._name) == tk.StringVar):
-            return(self._name.get())
-        else:
-            return(self._name)
+    # - set_name()
+    # Update the character name
+    #
+    # self
+    # new_name (str) - The new name
+    def set_name(self, new_name):
+
+        self._name = new_name
+
+        # Refresh GUI if applicable
+        self.gui_refresh()
+
+    # - age()
+    # Returns the age of the character
+    #
+    # self
+    def age(self):
+        
+        return(self._age)
+
+    # - set_age()
+    # Update the age the age of the character
+    #
+    # self
+    # new_age (int) - The new age
+    def set_age(self, new_age):
+
+        self._age = new_age
+
+        # Refresh GUI if applicable
+        self.gui_refresh()
 
     # - weapon()
     # Returns the weapon object the enemy uses
@@ -175,12 +205,11 @@ class Character:
         self._gui = tk.Frame(parent)
         self._gui.pack(fill = tk.X)
 
-        # Set character name label
-        # Check if it is string var
-        if(type(self._name) == tk.StringVar):
-            tk.Label(self._gui, textvariable = self._name, anchor = tk.W).pack(fill = tk.X)
-        else:
-            tk.Label(self._gui, text = self._name, anchor = tk.W).pack(fill = tk.X)
+        # Character vars
+        self._name_label = tk.Label(self._gui, text = self._name, anchor = tk.W)
+        self._name_label.pack(fill = tk.X)
+        self._age_label = tk.Label(self._gui, text = self._age, anchor = tk.W)
+        self._age_label.pack(fill = tk.X)
 
         # Setup health, weapon, and armour label
         self._health_label = tk.Label(self._gui, anchor = tk.W)
@@ -215,6 +244,9 @@ class Character:
                 self._armour_label.config(text = f"Armour: {self._armour.name()}")
             else:
                 self._armour_label.config(text = "Armour: None")
+
+            self._name_label.config(text = self._name)
+            self._age_label.config(text = self._age)
 
 # - Player
 # Child of Character

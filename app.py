@@ -52,11 +52,17 @@ class Game:
         self._boss_room_key = boss_room_key # Store key of boss room
         self._parent = None # Stores tkinter parent object
         self._gui = None # Stores GUI object
+        self._player_name = tk.StringVar()
+        self._player_age = tk.IntVar()
         self._player = characters.Player("Player", game_map) # Initialise the player
         self._control_state = True # Stores the state of the controls
 
         # Set boss room key callback
         self._boss_room_key.set_callback(self.unlock_boss_room)
+
+        # Default values for player name/age
+        self._player_name.set("Player")
+        self._player_age.set(18)
 
         # Add boss room key to items
         castle_items.append(self._boss_room_key)
@@ -155,6 +161,27 @@ class Game:
         # Print out a tutorial in log
         self.log("""Use WASD to move.""")
 
+        # Get player info
+        # Setup window
+        self._player_info_window = tk.Toplevel(self._parent)
+        self._player_info_window.title("Character Creation")
+        self._player_info_window.geometry("200x125+700+100")
+        # Setup widgets
+        # Set title
+        tk.Label(self._player_info_window, text = "Character Creation", anchor = tk.W).pack(fill = tk.X)
+        # Name label
+        tk.Label(self._player_info_window, text = "Name:", anchor = tk.W).pack(fill = tk.X)
+        # Name input
+        tk.Entry(self._player_info_window, textvariable = self._player_name).pack(fill = tk.X)
+        # Age label
+        tk.Label(self._player_info_window, text = "Age:", anchor = tk.W).pack(fill = tk.X)
+        # Age input
+        tk.Entry(self._player_info_window, textvariable = self._player_age).pack(fill = tk.X)
+        # Set button
+        ttk.Button(self._player_info_window, text = "Set Values", command = self.update_player).pack(fill = tk.X)
+        # Focus
+        self._player_info_window.focus_force()
+
         # Refresh the GUI
         self.gui_refresh()
 
@@ -201,6 +228,25 @@ class Game:
 
             # Draw player on map GUI
             self._current_room.draw_player(self._player)
+
+    # - update_player()
+    # Updates the player info from character selection
+    #
+    # self
+    def update_player(self):
+
+        # Get inputs
+        name = self._player_name.get()
+        age = self._player_age.get()
+
+        # Send values to player object
+        self._player.set_name(name)
+        self._player.set_age(age)
+
+        # Close player creation dialogue
+        self._player_info_window.destroy()
+        # Make sure parent is focused
+        self._parent.focus_force()
 
     # - give_player_item()
     # Give the player an item
