@@ -160,7 +160,9 @@ class Game:
         self.log("Welcome to Dracula's Castle!")
 
         # Print out a tutorial in log
-        self.log("""Use WASD to move.""")
+        self.log("""Use the character creation dialog to the upper left to customise your character.
+
+Use WASD to move.""")
 
         # Get player info
         # Setup window
