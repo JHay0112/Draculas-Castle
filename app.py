@@ -179,7 +179,7 @@ class Game:
         # Age input
         tk.Entry(self._player_info_window, textvariable = self._player_age).pack(fill = tk.X)
         # Set button
-        ttk.Button(self._player_info_window, text = "Set Values", command = self.update_player).pack(fill = tk.X, pady = (5, 0))
+        ttk.Button(self._player_info_window, text = "Create Character", command = self.update_player).pack(fill = tk.X, pady = (5, 0))
         # Focus
         self._player_info_window.focus_force()
 
