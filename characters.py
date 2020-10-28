@@ -234,12 +234,12 @@ class Character:
             self._health_label.config(text = f"Health: {self._health}")
             # Check if weapon exists
             if(self._weapon != None):
-                self._weapon_label.config(text = f"Weapon: {self._weapon.name()}")
+                self._weapon_label.config(text = f"Weapon: {self._weapon.name()} {self._weapon.get_damage()}")
             else:
                 self._weapon_label.config(text = "Weapon: None")
             # Check if armour exists
             if(self._armour != None):
-                self._armour_label.config(text = f"Armour: {self._armour.name()}")
+                self._armour_label.config(text = f"Armour: {self._armour.name()} {self._weapon.get_protection()}")
             else:
                 self._armour_label.config(text = "Armour: None")
 

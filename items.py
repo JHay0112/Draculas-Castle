@@ -72,7 +72,7 @@ class Weapon(Item):
         # Set attributes associated with parent item
         super().__init__(name, True)
 
-    # - attack()
+    # - attack_damage()
     # Returns attack damage
     #
     # self
@@ -82,6 +82,14 @@ class Weapon(Item):
         damage = random.randint(self._min_damage, self._max_damage)
 
         return(damage)
+
+    # - get_damage()
+    # Returns min and max attack damage as tuple
+    #
+    # self
+    def get_damage(self):
+
+        return(self._min_damage, self._max_damage)
 
 # Armour class, child of item
 class Armour(Item):
@@ -100,7 +108,7 @@ class Armour(Item):
         # Set attributes associated with parent item
         super().__init__(name, True)
 
-    # - defend()
+    # - protection()
     # Returns amount of damage to be protected, random between no protection and all set protection
     #
     # self
@@ -110,6 +118,14 @@ class Armour(Item):
         protection = random.randint(0, self._protection)
 
         return(protection)
+
+    # - get_protection()
+    # Returns the maximum amount of protection possible
+    #
+    # self
+    def get_protection(self):
+
+        return(self._protection)
 
 # Potion class, child of Item
 class Potion(Item):
@@ -265,6 +281,9 @@ class Inventory:
     #
     # self
     def gui_refresh(self):
+        
+        # Holds the description of the item, e.g. 30 defense
+        description_text = ""
 
         # First check that a GUI exists, if it doesn't then we can skip all this code
         if(self._gui is not None):
@@ -298,7 +317,20 @@ class Inventory:
 
                 # Display item info
                 tk.Label(self._item_frame, text = current_item.name()).pack(anchor = tk.W, pady = (10, 0))
-                tk.Label(self._item_frame, text = type(current_item).__name__).pack(anchor = tk.W)
+
+                # Compute item description
+                if(type(current_item) == Armour):
+                    # If armour describe with protection value
+                    description_text = f"({current_item.get_protection()})"
+                elif(type(current_item) == Weapon):
+                    # If weapon describe with min/max attack values
+                    description_text = current_item.get_damage()
+                elif(type(current_item) == Potion):
+                    # If potion describe with health effect
+                    description_text = f"({current_item.health_effect()})"
+
+                # Display item description
+                tk.Label(self._item_frame, text = f"{type(current_item).__name__} {description_text}").pack(anchor = tk.W)
 
     # - check_buttons()
     # Checks and sets the states of the control buttons

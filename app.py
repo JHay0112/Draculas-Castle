@@ -536,7 +536,7 @@ dracula = characters.Enemy("COUNT DRACULA",
                            1000,
                            150,
                            items.Weapon("DRACULA'S STAFF", 30, 50),
-                           items.Armour("DRACULA'S SHIELD", 30))
+                           items.Armour("DRACULA'S SHIELD", 20))
 
 # Other enemies that can be found in the castle
 castle_enemies = [
@@ -571,7 +571,7 @@ castle_enemies = [
         characters.Enemy("Larry",
                          10,
                          15,
-                         items.Weapon("Relationship Advice", -10, 10),
+                         items.Weapon("Advice", -10, 10),
                          None),
         characters.Enemy("Imaginos",
                          100,
