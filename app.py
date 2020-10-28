@@ -256,6 +256,18 @@ Use WASD to move.""")
             # Age is invalid
             messagebox.showerror("ERROR", "Age must be above zero (e.g. 3)!")
             error = True
+
+        # If age is greater than 10000
+        if(age > 10000):
+            # It's starting to get ridiculous, we'll limit this
+            messagebox.showerror("ERROR", "Age must be 10000 or less (e.g. 3)!")
+            error = True
+
+        # If name length is greater than 15 characters
+        if(len(name) > 15):
+            # Name is unreasonably long
+            messagebox.showerror("ERROR", f"Name must be no longer than 15 characters (It is currently {len(name)})!")
+            error = True
             
         # Only run these if there are no errors
         if(not error):
