@@ -374,6 +374,13 @@ Use WASD to move.""")
             # Remove enemy GUI
             for widget in self._enemy_stat_frame.winfo_children():
                 widget.destroy()
+
+            # Check if in the boss room
+            if(self._current_room == self._map.boss_room()):
+                # This means the boss is dead!
+                messagebox.showinfo("CONGRATULATIONS!", "You killed Dracula!")
+                # Remove GUI
+                self._parent.destroy()
         else:
             # Else the enemy attacks you
             attack_dam = enemy.attack(self._player)
@@ -515,9 +522,9 @@ castle_items.extend(potions)
 # Dracula
 dracula = characters.Enemy("COUNT DRACULA",
                            1000,
-                           200,
+                           150,
                            items.Weapon("DRACULA'S STAFF", 30, 50),
-                           items.Armour("DRACULA'S SHIELD", 50))
+                           items.Armour("DRACULA'S SHIELD", 30))
 
 # Other enemies that can be found in the castle
 castle_enemies = [
