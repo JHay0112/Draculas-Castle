@@ -239,7 +239,7 @@ class Character:
                 self._weapon_label.config(text = "Weapon: None")
             # Check if armour exists
             if(self._armour != None):
-                self._armour_label.config(text = f"Armour: {self._armour.name()} {self._weapon.get_protection()}")
+                self._armour_label.config(text = f"Armour: {self._armour.name()} ({self._armour.get_protection()})")
             else:
                 self._armour_label.config(text = "Armour: None")
 
