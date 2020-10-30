@@ -407,17 +407,27 @@ Use WASD to move.""")
 
             # Check if you're still alive
             if(self._player.is_alive() != True):
-                # YOU DIED!
-                self.log(f"You were incapacitated by {enemy.name()}!")
-                # Retreat
-                self.retreat()
-                # Give the player some health back
-                self._player.take_damage(-10)
-                # Unlock controls
-                self.set_control_state(True)
-                # Lock log controls
-                self._attack.configure(state = tk.DISABLED)
-                self._retreat.configure(state = tk.DISABLED)
+                
+                # Check if fighting boss
+                if(self._current_room == self._map.boss_room()):
+                    # You are dead forever now
+                    # Tell the user
+                    messagebox.showinfo("DEFEAT!", "Dracula killed you! This is the end.")
+                    # Remove GUI
+                    self._parent.destroy()
+                else:
+                    # Not fighting boss, revive
+                    # YOU DIED!
+                    self.log(f"You were incapacitated by {enemy.name()}!")
+                    # Retreat
+                    self.retreat()
+                    # Give the player some health back
+                    self._player.take_damage(-10)
+                    # Unlock controls
+                    self.set_control_state(True)
+                    # Lock log controls
+                    self._attack.configure(state = tk.DISABLED)
+                    self._retreat.configure(state = tk.DISABLED)
                 
     # - retreat()
     # Retreat from an enemy
@@ -539,7 +549,7 @@ castle_items.extend(potions)
 # Dracula
 dracula = characters.Enemy("COUNT DRACULA",
                            1000,
-                           150,
+                           100,
                            items.Weapon("DRACULA'S STAFF", 30, 50),
                            items.Armour("DRACULA'S SHIELD", 20))
 
