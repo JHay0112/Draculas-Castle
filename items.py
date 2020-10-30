@@ -338,14 +338,14 @@ class Inventory:
     # self
     # item (Item) - The item that we are checking the states of the buttons relative to
     def check_buttons(self, item):
-
+        
         # Check the item exists
         if(item is not None):
             # If it exists we can discard it
             '''self._drop_button.config(state = tk.ACTIVE)
             self._drop_button.config(command = lambda i = item: self.drop_item(i))'''
 
-            # If the current position is zero then disable the up button
+            # If the current position is less than zero then disable the up button
             if(self._position == 0):
                 self._up_button.config(state = tk.DISABLED)
             else:
@@ -432,8 +432,9 @@ class Inventory:
 
         # Drop the item from the list
         self._items.remove(item)
-        # Move position up one
-        self._position -= 1
+        # Move position up by one, if position is not already zero
+        if(self._position != 0):
+            self._position -= 1
         # Refresh the GUI if applicable
         self.gui_refresh()
 
@@ -445,6 +446,8 @@ class Inventory:
 
         # Set items to empty list
         self._items = []
+        # Refresh the GUI if applicable
+        self.gui_refresh()
 
     # - use()
     # Uses the current item if a use command is set
@@ -461,6 +464,8 @@ class Inventory:
 
         # Remove the item from the inventory
         self.drop_item(item)
+        # Refresh the GUI if applicable
+        self.gui_refresh()
 
 # - Main
 # Used for testing code associated with this module so this code should only run when it is main
