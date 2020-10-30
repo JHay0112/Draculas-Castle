@@ -432,6 +432,8 @@ class Inventory:
 
         # Drop the item from the list
         self._items.remove(item)
+        # Move position up one
+        self._position -= 1
         # Refresh the GUI if applicable
         self.gui_refresh()
 
