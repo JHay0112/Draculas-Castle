@@ -164,11 +164,14 @@ class Game:
 
 Use WASD to move.""")
 
+        # Withdraw parent window
+        self._parent.withdraw()
+
         # Get player info
         # Setup window
         self._player_info_window = tk.Toplevel(self._parent, padx = 10, pady = 10)
         self._player_info_window.title("Character Creation")
-        self._player_info_window.geometry("200x150+710+100")
+        self._player_info_window.geometry("200x150+100+100")
         # Setup widgets
         # Set title
         tk.Label(self._player_info_window, text = "Character Creation", anchor = tk.W).pack(fill = tk.X)
@@ -277,6 +280,8 @@ Use WASD to move.""")
 
             # Close player creation dialogue
             self._player_info_window.destroy()
+            # Open main window
+            self._parent.deiconify()
             # Make sure parent is focused
             self._parent.focus_force()
 
