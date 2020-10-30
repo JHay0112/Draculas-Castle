@@ -395,7 +395,7 @@ Use WASD to move.""")
             # Check if in the boss room
             if(self._current_room == self._map.boss_room()):
                 # This means the boss is dead!
-                messagebox.showinfo("CONGRATULATIONS!", "You killed Dracula!")
+                messagebox.showinfo("CONGRATULATIONS!", f"You killed {self._map.boss_room().enemies[0].name()}!")
                 # Remove GUI
                 self._parent.destroy()
         else:
@@ -412,7 +412,7 @@ Use WASD to move.""")
                 if(self._current_room == self._map.boss_room()):
                     # You are dead forever now
                     # Tell the user
-                    messagebox.showinfo("DEFEAT!", "Dracula killed you! This is the end.")
+                    messagebox.showinfo("DEFEAT!", f"{self._map.boss_room().enemies[0].name()} killed you! This is the end.")
                     # Remove GUI
                     self._parent.destroy()
                 else:
