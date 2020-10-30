@@ -502,8 +502,8 @@ draculas_key = items.Key("THE KEY TO THE CRYPT")
 weapons = [
         items.Weapon("Pointy Stick", 2, 5),
         items.Weapon("Crowbar", 3, 8),
-        items.Weapon("Steaming Vat of Molten Cheese", 5, 9),
-        items.Weapon("Nokia 3310 Boomerang", 10, 15),
+        items.Weapon("Molten Cheese", 5, 9),
+        items.Weapon("Boomerang", 10, 15),
         items.Weapon("Laser Jet Printer", 12, 18),
         items.Weapon("Red Syringe", 10, 25)
     ]
@@ -515,7 +515,7 @@ armour = [
         items.Armour("Sheet Metal Shield", 6),
         items.Armour("Wooden Breastplate", 7),
         items.Armour("Sheet Metal Breastplate", 10),
-        items.Armour("Nokia 3310 Shin Pads", 15)
+        items.Armour("Shin Pads", 15)
     ]
 
 # --- Potions
@@ -524,7 +524,7 @@ potions = [
         items.Potion("Water", 5),
         items.Potion("Fresh Mountain Water", 20),
         items.Potion("Hot Chocolate", 10),
-        items.Potion("Dessicated Sustenance Bar", 30),
+        items.Potion("Sustenance Bar", 30),
         items.Potion("Green Syringe", 50)
     ]
 
