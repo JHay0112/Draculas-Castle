@@ -395,7 +395,7 @@ Use WASD to move.""")
             # Check if in the boss room
             if(self._current_room == self._map.boss_room()):
                 # This means the boss is dead!
-                messagebox.showinfo("CONGRATULATIONS!", f"You killed {self._map.boss_room().enemies()[0].name()}!")
+                messagebox.showinfo("CONGRATULATIONS!", f"You killed {enemy.name()}!")
                 # Remove GUI
                 self._parent.destroy()
         else:
@@ -412,7 +412,7 @@ Use WASD to move.""")
                 if(self._current_room == self._map.boss_room()):
                     # You are dead forever now
                     # Tell the user
-                    messagebox.showinfo("DEFEAT!", f"{self._map.boss_room().enemies()[0].name()} killed you! This is the end.")
+                    messagebox.showinfo("DEFEAT!", f"{enemy.name()} killed you! This is the end.")
                     # Remove GUI
                     self._parent.destroy()
                 else:
@@ -559,13 +559,13 @@ castle_enemies = [
                          2,
                          40,
                          items.Weapon("HONK", 10, 15),
-                         items.Armour("Goose Feathers", 8)),
+                         items.Armour("Goose Feathers", 10)),
         characters.Enemy("Thousands of Bees",
                          1,
                          100,
                          items.Weapon("Sting", 1, 3),
                          items.Armour("Exoskeleton", 1),
-                         [items.Weapon("Bee Sting Sword", 10, 25),
+                         [items.Weapon("Bee Sting Sword", 20, 30),
                           items.Potion("Honey", 20)]),
         characters.Enemy("John",
                          32,
