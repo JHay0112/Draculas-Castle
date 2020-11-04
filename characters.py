@@ -407,8 +407,7 @@ if(__name__ == "__main__"):
     game_map = rooms.Map([[start_room], [end_room]], start_room, end_room)
 
     # String var name
-    name = tk.StringVar()
-    name.set("Jordan Hay")
+    name = "Jordan Hay"
 
     # Create player object
     player = Player(name, game_map)
