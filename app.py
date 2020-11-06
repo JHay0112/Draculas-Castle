@@ -156,12 +156,6 @@ class Game:
         self._retreat = ttk.Button(self._log_controls, text = "RETREAT", state = tk.DISABLED, command = self.retreat)
         self._retreat.pack(fill = tk.X, side = tk.LEFT, expand = True)
 
-        # Log game start
-        self.log("Welcome to Dracula's Castle!")
-
-        # Print out a tutorial in log
-        self.log("""Use WASD to move.""")
-
         # Withdraw parent window
         self._parent.withdraw()
 
@@ -282,6 +276,21 @@ class Game:
             self._parent.deiconify()
             # Make sure parent is focused
             self._parent.focus_force()
+
+            # Generate tutorial
+            tutorial = [
+                "Welcome to Dracula's Castle!\n\n"
+                "Use WASD to move.",
+                "Top-left is your map.",
+                "Top-right is your player stats.",
+                "Bottom-left is your inventory and that of the current room.",
+                "Bottom-right is the attack/retreat controls.",
+                "To use an item you've found in a room, use PICK UP and then USE."]
+
+            # For every message add a dely before printing
+            for i in range(len(tutorial)):
+                self._parent.after(1500*i, lambda i = i: self.log(tutorial[i]))
+            
 
     # - give_player_item()
     # Give the player an item
